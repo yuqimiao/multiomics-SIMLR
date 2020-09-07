@@ -7,18 +7,3 @@ editor_options:
   chunk_output_type: console
 ---
 
-# Introduction
-
-## Goal of Study
-
-Complex diseases, like cancer, are typically multi-pathogenesis on genomic aspect. Different treatment could be developed accordingly if the subtype of disease can be correctly specified. In this study, we try to develop a new  method to build similarity networks between patients based on the integrated multi-omics data, and using spectral clustering for further subtypes identification.
-
-## Timeline and major completed tasks
-May 20th - June 20th Paper reading and Topic choosing
-June 20th - July 6th Paper details learning and theory developing
-July 6th - July 31st multi-omics data analysis trial for SIMLR-Integration (with small data analysis project for covid )
-August 2nd - August 31st Simulation and new methods developing
-
-# Analysis and methods 
-
-1. The major progress now is shown [here](sim_report.html)
