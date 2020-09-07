@@ -1,7 +1,7 @@
-name: "multiomics-SIMLR"
+name: multiomics-SIMLR
 output_dir: ../docs
 navbar:
-  title: "multiomics-SIMLR"
+  title: multiomics-SIMLR
   left:
   - text: Home
     href: index.html
@@ -9,6 +9,10 @@ navbar:
     href: about.html
   - text: License
     href: license.html
+  right:
+  - icon: fa-github
+    text: Source code
+    href: https://github.com/yuqimiao/multiomics-SIMLR
 output:
   workflowr::wflow_html:
     toc: yes
