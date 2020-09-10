@@ -24,3 +24,4 @@ August 2nd - August 31st Simulation and new methods developing
 # Analysis and methods 
 
 1. The major progress now is shown [here](sim_report.html)
+2. Some trivial analysis can be found [here](trivial_analysis.html)
