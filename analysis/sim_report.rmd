@@ -19,7 +19,7 @@ source("./code/functions/simulation_function.R")
 
 # simulation setting
 
-![](../analysis/Simulation_setting .jpeg)
+![](Simulation_setting .jpeg)
 
 # 3 methods we are comparing now:
 
