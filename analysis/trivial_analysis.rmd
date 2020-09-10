@@ -87,8 +87,8 @@ truelabel = NULL
     truelabel = c(truelabel, rep(i,length(index[[i]])))
   }
 par(mfrow = c(2,1))
-hist(data1[1:120,1:50], main = "the first 3 subtype")
-hist(data1[121:200,1:50], main = " the latter 3 subtype")
+hist(data1[1:144,1:50], main = "the first 3 subtype")
+hist(data1[145:200,1:50], main = " the latter 3 subtype")
 ```
 3. For weight construction
 
