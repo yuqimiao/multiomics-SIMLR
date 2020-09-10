@@ -11,9 +11,9 @@
 
 <meta name="author" content="yuqimiao" />
 
-<meta name="date" content="2020-09-06" />
+<meta name="date" content="2020-09-08" />
 
-<title>sim_report</title>
+<title>trivial_analysis</title>
 
 <script src="site_libs/header-attrs-2.1/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
@@ -389,9 +389,9 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">sim_report</h1>
+<h1 class="title toc-ignore">trivial_analysis</h1>
 <h4 class="author">yuqimiao</h4>
-<h4 class="date">2020-09-06</h4>
+<h4 class="date">2020-09-08</h4>
 
 </div>
 
@@ -554,7 +554,7 @@ Note that any generated files, e.g. HTML, png, CSS, etc., are not included in t
 <div id="versions" class="tab-pane fade">
 
 <p>
-These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/sim_report.rmd</code>) and HTML (<code>docs/sim_report.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/trivial_analysis.rmd</code>) and HTML (<code>docs/trivial_analysis.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
 </p>
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
@@ -583,7 +583,7 @@ Message
 Rmd
 </td>
 <td>
-<a href="https://github.com/yuqimiao/multiomics-SIMLR/blob/1179a63f49728013a527557cb74c091de4429f3e/analysis/sim_report.rmd" target="_blank">1179a63</a>
+<a href="https://github.com/yuqimiao/multiomics-SIMLR/blob/1179a63f49728013a527557cb74c091de4429f3e/analysis/trivial_analysis.rmd" target="_blank">1179a63</a>
 </td>
 <td>
 yuqimiao
@@ -595,40 +595,6 @@ yuqimiao
 simulation describe and basic operation for a data in trivial analysis
 </td>
 </tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/yuqimiao/multiomics-SIMLR/778a582af8c258c41f5097436133bc3e0ebd91be/docs/sim_report.html" target="_blank">778a582</a>
-</td>
-<td>
-yuqimiao
-</td>
-<td>
-2020-09-06
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/yuqimiao/multiomics-SIMLR/blob/0aa704f7dbce5ba44f13edd5e30987d683425ee8/analysis/sim_report.rmd" target="_blank">0aa704f</a>
-</td>
-<td>
-yuqimiao
-</td>
-<td>
-2020-09-06
-</td>
-<td>
-inital intro and simulation report
-</td>
-</tr>
 </tbody>
 </table>
 </div>
@@ -636,245 +602,166 @@ inital intro and simulation report
 </div>
 </div>
 </div>
-<div id="simulation-setting" class="section level1">
-<h1>simulation setting</h1>
-<p><img src="Simulation_setting%20.jpeg" /></p>
+<div id="for-cluster-evaluation-index" class="section level1">
+<h1>For cluster evaluation index</h1>
+<pre class="r"><code>library(igraph)</code></pre>
+<pre><code>
+Attaching package: &#39;igraph&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:stats&#39;:
+
+    decompose, spectrum</code></pre>
+<pre><code>The following object is masked from &#39;package:base&#39;:
+
+    union</code></pre>
+<pre class="r"><code>library(tidyverse)</code></pre>
+<pre><code>── Attaching packages ────────────────────────────────────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
+<pre><code>✓ ggplot2 3.3.0     ✓ purrr   0.3.3
+✓ tibble  3.0.0     ✓ dplyr   0.8.5
+✓ tidyr   1.0.2     ✓ stringr 1.4.0
+✓ readr   1.3.1     ✓ forcats 0.5.0</code></pre>
+<pre><code>── Conflicts ───────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+x dplyr::as_data_frame() masks tibble::as_data_frame(), igraph::as_data_frame()
+x purrr::compose()       masks igraph::compose()
+x tidyr::crossing()      masks igraph::crossing()
+x dplyr::filter()        masks stats::filter()
+x dplyr::groups()        masks igraph::groups()
+x dplyr::lag()           masks stats::lag()
+x purrr::simplify()      masks igraph::simplify()</code></pre>
+<pre class="r"><code>compare(rep(1:3,times = c(15,15,120)),rep(1:2, times = c(30,120)),method = &quot;nmi&quot;)</code></pre>
+<pre><code>[1] 0.8783349</code></pre>
+<pre class="r"><code>compare(rep(1:3,times = c(15,15,120)),rep(1:2, times = c(30,120)),method = &quot;rand&quot;)</code></pre>
+<pre><code>[1] 0.9798658</code></pre>
+<p>It can be seen that, using the rand and nmi as evaluation criterion, although A/B can’t be divide, the index is also very high</p>
 </div>
-<div id="methods-we-are-comparing-now" class="section level1">
-<h1>3 methods we are comparing now:</h1>
+<div id="simulation-logic" class="section level1">
+<h1>simulation logic</h1>
 <ol style="list-style-type: decimal">
-<li>abSNF (refer)</li>
-<li>mk-SIMLR (finished)</li>
-<li>weighted_mk_SIMLR(todo)</li>
+<li>here we are assuming every data can only provide 1 division, which means for a type of data, we can only cluster to 2 subtypes;</li>
+<li>For this simulation setting, we can also expand our subtype number to 5 or 6, which can be divided by:</li>
 </ol>
-</div>
-<div id="method2-multi-simlr" class="section level1">
-<h1>Method2 multi-SIMLR</h1>
-<div id="compare-snfs-function" class="section level2">
-<h2>Compare SNF’s function</h2>
-<p>Here we using the most imbalanced case to show the advantage of multi-SIMLR:</p>
-<div id="when-the-2-data-types-have-the-same-distribution" class="section level3">
-<h3>when the 2 data types have the same distribution</h3>
-<pre class="r"><code>sim = simulation_2(eff_size = c(1,9), sub_ratio = c(0.1,0.1,0.8), dist = c(&quot;norm&quot;, &quot;norm&quot;),sigma = 5)
-truelabel = sim$true_label</code></pre>
-<p>since same distribution, we have no normalization step here</p>
-<div id="absnf" class="section level4">
-<h4>abSNF</h4>
-<pre class="r"><code>Data1 = sim$GE
-weight1 = sim$ge_weight
-Dist1 = dist2_w(as.matrix(Data1), as.matrix(Data1), weight1)
-W1 = affinityMatrix(Dist1)
+<p>for 5 * “12/345” * “13/245” * “14/235”</p>
+<p>for 6 * 123/456 * 145/236 * 124/356</p>
+<p>(use plot to show the division)</p>
+<p>we can directly change the sub_ratio, data_division to get 5 or 6 subtype</p>
+<pre class="r"><code># try using 4 groups divided by 3 types of data
 
-Data2 = sim$MI
-weight2 = sim$mi_weight
-Dist2 = dist2_w(as.matrix(Data2), as.matrix(Data2), weight2)
-W2 = affinityMatrix(Dist2)
+## input
+size = 240
+sub_ratio = c(rep(0.2,4),rep(0.1,2))
+eff_size = rep(5,3)
+sigma = 10
+data_divide =&quot;123/456&quot;
+dist = &quot;normal&quot;
 
-W = SNF(list(W1, W2))
-cluster_SNF = spectralClustering(W, 3)</code></pre>
-<ul>
-<li>here we are using 3 index to compare the clustering result</li>
-</ul>
-<pre class="r"><code>cluster_purity = function(cluster, truth){
-  comp = as_tibble(cbind(cluster,truth))
-  purity = comp %&gt;%
-    group_by(truth) %&gt;% 
-    count(cluster) %&gt;% 
-    summarise(purity = max(n)/sum(n)) %&gt;% 
-    pull(purity)
-  return(purity)
-}
-cluster_purity(cluster = cluster_SNF, truth = truelabel)</code></pre>
-<pre><code>[1] 1.0000000 1.0000000 0.5333333</code></pre>
-<pre class="r"><code>nmi_SNF = compare(cluster_SNF, truelabel,method = &quot;nmi&quot;)
-rand_SNF = compare(cluster_SNF, truelabel,method = &quot;rand&quot;)
-nmi_SNF</code></pre>
-<pre><code>[1] 0.5914318</code></pre>
-<pre class="r"><code>rand_SNF</code></pre>
-<pre><code>[1] 0.6591499</code></pre>
-</div>
-<div id="multi-simlr-with-snf-initials" class="section level4">
-<h4>multi-SIMLR with SNF initials</h4>
-<pre class="r"><code>mk1 = multiple.kernel(Data1)
-mk2 = multiple.kernel(Data2)
-
-## merge 2 kernel collections
-D_kernels = list()
-for(i in 1:(length(mk1)+length(mk2))){
-  if(i&lt;=length(mk1)){
-    D_kernels[[i]] = mk1[[i]]
+## calculate index_cut for given subtype ratio
+index_cut = cumsum(sub_ratio)*size
+index = list()
+for(i in 1:length(index_cut)){
+  if(i == 1){
+    index[[i]] = 1:index_cut[1]
   }else{
-    D_kernels[[i]] = mk2[[i-length(mk1)]]
+    index[[i]] = (index_cut[[i-1]]+1):index_cut[[i]]
   }
 }
 
-simlr_res_affSNF = SIMLR_multi_SNF(D_Kernels = D_kernels, c = 3, SNF_init = W)</code></pre>
-<pre><code>Iteration:  1 
-Iteration:  2 
-Iteration:  3 
-Iteration:  4 
-Iteration:  5 
-Iteration:  6 
-Iteration:  7 
-Iteration:  8 
-Iteration:  9 
-Iteration:  10 
-Iteration:  11 
-Iteration:  12 
-Iteration:  13 
-Iteration:  14 
-Iteration:  15 
-Iteration:  16 
-Iteration:  17 
-Iteration:  18 
-Iteration:  19 
-Iteration:  20 
-Iteration:  21 
-Iteration:  22 
-Iteration:  23 
-Iteration:  24 
-Iteration:  25 </code></pre>
-<pre><code>Warning in SIMLR_multi_SNF(D_Kernels = D_kernels, c = 3, SNF_init = W): Maybe
-you should set a larger value of c.</code></pre>
-<pre><code>[1] 150
-Performing t-SNE.
-Epoch: Iteration # 100  error is:  1.332918 
-Epoch: Iteration # 200  error is:  1.259147 
-Epoch: Iteration # 300  error is:  1.253088 
-Epoch: Iteration # 400  error is:  1.252979 
-Epoch: Iteration # 500  error is:  1.252967 
-Epoch: Iteration # 600  error is:  1.252954 
-Epoch: Iteration # 700  error is:  1.25294 
-Epoch: Iteration # 800  error is:  1.252923 
-Epoch: Iteration # 900  error is:  1.252903 
-Epoch: Iteration # 1000  error is:  1.252886 
-Performing Kmeans.
-Performing t-SNE.
-Epoch: Iteration # 100  error is:  22.50207 
-Epoch: Iteration # 200  error is:  2.584884 
-Epoch: Iteration # 300  error is:  2.157575 
-Epoch: Iteration # 400  error is:  1.842305 
-Epoch: Iteration # 500  error is:  1.658137 
-Epoch: Iteration # 600  error is:  1.646675 
-Epoch: Iteration # 700  error is:  1.600248 
-Epoch: Iteration # 800  error is:  1.571123 
-Epoch: Iteration # 900  error is:  1.659672 
-Epoch: Iteration # 1000  error is:  1.989175 </code></pre>
-<pre class="r"><code>simlr_res_noSNF = SIMLR_multi(D_kernels, c = 3)</code></pre>
-<pre><code>Iteration:  1 
-Iteration:  2 
-Iteration:  3 
-Iteration:  4 
-Iteration:  5 
-Iteration:  6 
-Iteration:  7 
-Iteration:  8 
-Iteration:  9 
-Iteration:  10 
-Iteration:  11 
-Iteration:  12 
-Iteration:  13 
-Iteration:  14 
-Iteration:  15 
-Iteration:  16 
-Iteration:  17 
-Iteration:  18 
-Iteration:  19 
-Iteration:  20 
-Iteration:  21 
-Iteration:  22 
-Iteration:  23 
-Iteration:  24 
-Iteration:  25 
-Iteration:  26 
-Iteration:  27 
-Iteration:  28 
-Iteration:  29 
-Iteration:  30 
-[1] 150
-Performing t-SNE.
-Epoch: Iteration # 100  error is:  1.380559 
-Epoch: Iteration # 200  error is:  1.273509 
-Epoch: Iteration # 300  error is:  1.258723 
-Epoch: Iteration # 400  error is:  1.266899 
-Epoch: Iteration # 500  error is:  1.25643 
-Epoch: Iteration # 600  error is:  1.255307 
-Epoch: Iteration # 700  error is:  1.250494 
-Epoch: Iteration # 800  error is:  1.250476 
-Epoch: Iteration # 900  error is:  1.250458 
-Epoch: Iteration # 1000  error is:  1.250441 
-Performing Kmeans.
-Performing t-SNE.
-Epoch: Iteration # 100  error is:  22.57647 
-Epoch: Iteration # 200  error is:  3.435626 
-Epoch: Iteration # 300  error is:  2.378684 
-Epoch: Iteration # 400  error is:  2.384306 
-Epoch: Iteration # 500  error is:  2.085067 
-Epoch: Iteration # 600  error is:  2.022857 
-Epoch: Iteration # 700  error is:  2.084198 
-Epoch: Iteration # 800  error is:  1.786993 
-Epoch: Iteration # 900  error is:  1.827277 
-Epoch: Iteration # 1000  error is:  1.857734 </code></pre>
-<ul>
-<li>here we are using 3 index to compare the clustering result</li>
-</ul>
-<pre class="r"><code>cluster_purity(simlr_res_affSNF$y$cluster, truelabel)</code></pre>
-<pre><code>[1] 0.8666667 0.6000000 1.0000000</code></pre>
-<pre class="r"><code>compare(simlr_res_affSNF$y$cluster, truelabel, method = &quot;nmi&quot;)</code></pre>
-<pre><code>[1] 0.826626</code></pre>
-<pre class="r"><code>cluster_purity(simlr_res_noSNF$y$cluster, truelabel)</code></pre>
-<pre><code>[1] 0.8666667 0.5333333 1.0000000</code></pre>
-<pre class="r"><code>compare(simlr_res_noSNF$y$cluster, truelabel, method = &quot;nmi&quot;)</code></pre>
-<pre><code>[1] 0.8199736</code></pre>
-</div>
-</div>
-<div id="when-the-2-data-types-have-different-distributions" class="section level3">
-<h3>when the 2 data types have different distributions</h3>
-<pre class="r"><code>sim = simulation_2(eff_size = c(1,9), sub_ratio = c(0.1,0.1,0.8), dist = c(&quot;norm&quot;, &quot;logit&quot;),sigma = 5)
-truelabel = sim$true_label</code></pre>
-<div id="normalization" class="section level4">
-<h4>normalization</h4>
-<pre class="r"><code>Data1 = standardNormalization(Data1)
-Data2 = standardNormalization(Data2)</code></pre>
-</div>
-<div id="absnf-1" class="section level4">
-<h4>abSNF</h4>
-<pre class="r"><code>Data1 = sim$GE
-weight1 = sim$ge_weight
-Dist1 = dist2_w(as.matrix(Data1), as.matrix(Data1), weight1)
-W1 = affinityMatrix(Dist1)
-
-Data2 = sim$MI
-weight2 = sim$mi_weight
-Dist2 = dist2_w(as.matrix(Data2), as.matrix(Data2), weight2)
-W2 = affinityMatrix(Dist2)
-
-W = SNF(list(W1, W2))
-cluster_SNF = spectralClustering(W, 3)
-nmi_SNF = compare(cluster_SNF, truelabel,method = &quot;nmi&quot;)
-rand_SNF = compare(cluster_SNF, truelabel,method = &quot;rand&quot;)
-nmi_SNF</code></pre>
-<pre><code>[1] 0.5908106</code></pre>
-<pre class="r"><code>rand_SNF</code></pre>
-<pre><code>[1] 0.6577181</code></pre>
-</div>
-<div id="multi-simlr-with-snf-initials-1" class="section level4">
-<h4>multi-SIMLR with SNF initials</h4>
-<pre class="r"><code>mk1 = multiple.kernel(Data1)
-mk2 = multiple.kernel(Data2)
-
-## merge 2 kernel collections
-D_kernels = list()
-for(i in 1:(length(mk1)+length(mk2))){
-  if(i&lt;=length(mk1)){
-    D_kernels[[i]] = mk1[[i]]
-  }else{
-    D_kernels[[i]] = mk2[[i-length(mk1)]]
-  }
+### for a data
+data1 = matrix(0,size, 1000)
+divide = lapply(X = str_split(str_split(data_divide,pattern = &quot;/&quot;)[[1]], pattern = &quot;&quot;), 
+                FUN = as.numeric
+                )
+ind1 = NULL
+for(i in 1:length(divide[[1]])){
+  ind1 = c(ind1, index[[divide[[1]][i]]])
+}
+ind2 = NULL
+for(i in 1:length(divide[[2]])){
+  ind2 = c(ind2, index[[divide[[2]][i]]])
+}
+if (dist == &quot;normal&quot;){
+  data1[ind1,1:50] = rnorm(length(ind1)*50, eff_size[1], sqrt(sigma))
+  data1[ind2,1:50] = rnorm(length(ind2)*50, -eff_size[1], sqrt(sigma))
+}else if(dist == &quot;logit&quot;){
+  data1[ind1,1:50] = sapply(X = rnorm(length(ind1)*50, eff_size[1], sqrt(sigma)),
+                            FUN = function(x) exp(x)/(1+exp(x))
+                            )
+  data1[ind2,1:50] = sapply(X = rnorm(length(ind2)*50, -eff_size[1], sqrt(sigma)),
+                            FUN = function(x) exp(x)/(1+exp(x))
+                            )
 }
 
-simlr_res_affSNF = SIMLR_multi_SNF(D_Kernels = D_kernels, c = 3, SNF_init = W)</code></pre>
-<pre><code>Iteration:  1 
+truelabel = NULL
+  for (i in 1:length(index)){
+    truelabel = c(truelabel, rep(i,length(index[[i]])))
+  }
+par(mfrow = c(2,1))
+hist(data1[1:120,1:50], main = &quot;the first 3 subtype&quot;)
+hist(data1[121:200,1:50], main = &quot; the latter 3 subtype&quot;)</code></pre>
+<p><img src="figure/trivial_analysis.rmd/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /> 3. For weight construction</p>
+<p>Using the best performance setting for abSNF( from peifeng’s paper)</p>
+<pre class="r"><code>n1 = 50*0.6#n1 is # of correct weights for informative features
+n2 = 950*0.8#n2 is # of correct weights for non-informative features
+r1 = 1
+r2 = 3
+uninfo_r1 = 0
+uninfo_r2 = 1
+#r1, r2, uninfo_r1, uninfo_r2 define the magnitude of correct wights 
+ge_weight=abs(runif(1000,0,1))
+s=sample(1:50,n1)
+ge_weight[s]=runif(n1,r1,r2)
+ss=sample(51:1000,n2)
+ge_weight[ss]=runif(n2,uninfo_r1,uninfo_r2)
+plot(1:1000, ge_weight)</code></pre>
+<p><img src="figure/trivial_analysis.rmd/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="steps-for-a-single-data" class="section level1">
+<h1>Steps for a single data:</h1>
+<p>From every data type, we want to get the result:</p>
+<ol style="list-style-type: decimal">
+<li>multiple kernels</li>
+<li>affinity matrix</li>
+<li>eigen gap result</li>
+<li>SIMLR result</li>
+</ol>
+<p>Firstly, for clarification, the affinity matrix gives the RBF kernels of the data, while the multiple kernel getting from SIMLR-multiple.kernel function gives the nomalized distance btw subjects, so we can’t just using the averaged multiple kernel to do the SNF</p>
+<pre class="r"><code># check affinity matrix and kernels
+library(abSNF)</code></pre>
+<pre><code>
+Attaching package: &#39;abSNF&#39;</code></pre>
+<pre><code>The following object is masked _by_ &#39;.GlobalEnv&#39;:
+
+    data1</code></pre>
+<pre class="r"><code>library(SIMLR)
+library(SNFtool)</code></pre>
+<pre><code>
+Attaching package: &#39;SNFtool&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:abSNF&#39;:
+
+    affinityMatrix, dist2, SNF, spectralClustering,
+    standardNormalization</code></pre>
+<pre class="r"><code>library(parallel)
+library(Matrix)</code></pre>
+<pre><code>
+Attaching package: &#39;Matrix&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:tidyr&#39;:
+
+    expand, pack, unpack</code></pre>
+<pre class="r"><code>source(&quot;./code/R/compute.multiple.kernel.R&quot;)
+data1 = standardNormalization(data1)
+mk1 = multiple.kernel(data1)
+af1 = affinityMatrix(dist2_w(as.matrix(data1),as.matrix(data1), weight = ge_weight))
+par(mfrow = c(2,1))
+displayClusters(af1, truelabel)
+displayClusters(as.matrix(mk1[[1]]), truelabel)</code></pre>
+<p><img src="figure/trivial_analysis.rmd/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div id="gap-and-simlr-results" class="section level2">
+<h2>gap and SIMLR results</h2>
+<pre class="r"><code>K = 2
+cores.ratio = 0.5
+gap1 = estimateNumberOfClustersGivenGraph(af1,2:5)$`Eigen-gap best`
+simlr1 = SIMLR(t(data1), K,cores.ratio = cores.ratio)</code></pre>
+<pre><code>Computing the multiple Kernels.
+Performing network diffiusion.
+Iteration:  1 
 Iteration:  2 
 Iteration:  3 
 Iteration:  4 
@@ -884,109 +771,37 @@ Iteration:  7
 Iteration:  8 
 Iteration:  9 
 Iteration:  10 </code></pre>
-<pre><code>Warning in SIMLR_multi_SNF(D_Kernels = D_kernels, c = 3, SNF_init = W): Maybe
-you should set a larger value of c.</code></pre>
-<pre><code>[1] 150
-Performing t-SNE.
-Epoch: Iteration # 100  error is:  0.5043491 
-Epoch: Iteration # 200  error is:  0.2775295 
-Epoch: Iteration # 300  error is:  0.3435206 
-Epoch: Iteration # 400  error is:  0.5144131 
-Epoch: Iteration # 500  error is:  0.5295461 
-Epoch: Iteration # 600  error is:  0.3137354 
-Epoch: Iteration # 700  error is:  0.3533034 
-Epoch: Iteration # 800  error is:  0.4859047 
-Epoch: Iteration # 900  error is:  0.5241328 
-Epoch: Iteration # 1000  error is:  0.3455678 
+<pre><code>Warning in SIMLR(t(data1), K, cores.ratio = cores.ratio): Maybe you should set a
+larger value of c.</code></pre>
+<pre><code>Performing t-SNE.
+Epoch: Iteration # 100  error is:  0.1822132 
+Epoch: Iteration # 200  error is:  0.1818182 
+Epoch: Iteration # 300  error is:  0.1815448 
+Epoch: Iteration # 400  error is:  0.1813413 
+Epoch: Iteration # 500  error is:  0.1811851 
+Epoch: Iteration # 600  error is:  0.1810577 
+Epoch: Iteration # 700  error is:  0.1809502 
+Epoch: Iteration # 800  error is:  0.1808586 
+Epoch: Iteration # 900  error is:  0.1807793 
+Epoch: Iteration # 1000  error is:  0.1807122 
 Performing Kmeans.
 Performing t-SNE.
-Epoch: Iteration # 100  error is:  16.30693 
-Epoch: Iteration # 200  error is:  1.419329 
-Epoch: Iteration # 300  error is:  0.9509741 
-Epoch: Iteration # 400  error is:  1.578693 
-Epoch: Iteration # 500  error is:  0.8464557 
-Epoch: Iteration # 600  error is:  0.8790732 
-Epoch: Iteration # 700  error is:  0.8570385 
-Epoch: Iteration # 800  error is:  0.7533403 
-Epoch: Iteration # 900  error is:  0.7206553 
-Epoch: Iteration # 1000  error is:  0.7039224 </code></pre>
-<pre class="r"><code>simlr_res_noSNF = SIMLR_multi(D_kernels, c = 3)</code></pre>
-<pre><code>Iteration:  1 
-Iteration:  2 
-Iteration:  3 
-Iteration:  4 
-Iteration:  5 
-Iteration:  6 
-Iteration:  7 
-Iteration:  8 
-Iteration:  9 
-Iteration:  10 
-Iteration:  11 
-Iteration:  12 
-Iteration:  13 
-Iteration:  14 
-Iteration:  15 
-Iteration:  16 
-Iteration:  17 
-Iteration:  18 
-Iteration:  19 
-Iteration:  20 
-Iteration:  21 
-Iteration:  22 
-Iteration:  23 
-Iteration:  24 
-Iteration:  25 
-Iteration:  26 
-Iteration:  27 
-Iteration:  28 
-Iteration:  29 </code></pre>
-<pre><code>Warning in SIMLR_multi(D_kernels, c = 3): Maybe you should set a larger value of
-c.</code></pre>
-<pre><code>[1] 150
-Performing t-SNE.
-Epoch: Iteration # 100  error is:  0.4451733 
-Epoch: Iteration # 200  error is:  0.3721494 
-Epoch: Iteration # 300  error is:  0.3902492 
-Epoch: Iteration # 400  error is:  0.5234011 
-Epoch: Iteration # 500  error is:  0.39983 
-Epoch: Iteration # 600  error is:  0.4271045 
-Epoch: Iteration # 700  error is:  0.3483221 
-Epoch: Iteration # 800  error is:  0.3639492 
-Epoch: Iteration # 900  error is:  0.4788032 
-Epoch: Iteration # 1000  error is:  0.3814066 
-Performing Kmeans.
-Performing t-SNE.
-Epoch: Iteration # 100  error is:  10.96272 
-Epoch: Iteration # 200  error is:  0.8197551 
-Epoch: Iteration # 300  error is:  0.8308428 
-Epoch: Iteration # 400  error is:  0.7617961 
-Epoch: Iteration # 500  error is:  0.8667094 
-Epoch: Iteration # 600  error is:  0.769043 
-Epoch: Iteration # 700  error is:  0.7944746 
-Epoch: Iteration # 800  error is:  0.7794578 
-Epoch: Iteration # 900  error is:  1.041494 
-Epoch: Iteration # 1000  error is:  0.9284239 </code></pre>
-<pre class="r"><code>cluster_purity(simlr_res_affSNF$y$cluster, truelabel)</code></pre>
-<pre><code>[1] 1.0000000 1.0000000 0.8083333</code></pre>
-<pre class="r"><code>compare(simlr_res_affSNF$y$cluster, truelabel, method = &quot;nmi&quot;)</code></pre>
-<pre><code>[1] 0.653976</code></pre>
-<pre class="r"><code>cluster_purity(simlr_res_noSNF$y$cluster, truelabel)</code></pre>
-<pre><code>[1] 0.6666667 0.8000000 1.0000000</code></pre>
-<pre class="r"><code>compare(simlr_res_noSNF$y$cluster, truelabel, method = &quot;nmi&quot;)</code></pre>
-<pre><code>[1] 0.8008394</code></pre>
-</div>
-</div>
-<div id="conclusion" class="section level3">
-<h3>Conclusion:</h3>
-<p>SNF_initial seems has no special improvement here.</p>
-</div>
-</div>
-</div>
-<div id="methods3-multi-simlr-with-weighted-multiple-kernels" class="section level1">
-<h1>Methods3: multi-SIMLR with weighted multiple kernels</h1>
-</div>
-<div id="methods-compare" class="section level1">
-<h1>methods compare</h1>
+Epoch: Iteration # 100  error is:  9.090653 
+Epoch: Iteration # 200  error is:  0.1810468 
+Epoch: Iteration # 300  error is:  0.1804331 
+Epoch: Iteration # 400  error is:  0.180399 
+Epoch: Iteration # 500  error is:  0.1803674 
+Epoch: Iteration # 600  error is:  0.1803384 
+Epoch: Iteration # 700  error is:  0.1803136 
+Epoch: Iteration # 800  error is:  0.1802877 
+Epoch: Iteration # 900  error is:  0.1802636 
+Epoch: Iteration # 1000  error is:  0.1802408 </code></pre>
+<pre class="r"><code>nmi = compare(simlr1$y$cluster,truelabel, method = &quot;nmi&quot;)
+rand = compare(simlr1$y$cluster,truelabel, method = &quot;rand&quot;)
+nmi</code></pre>
+<pre><code>[1] 0.5559601</code></pre>
+<pre class="r"><code>rand</code></pre>
+<pre><code>[1] 0.6585774</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1011,30 +826,30 @@ attached base packages:
 [8] base     
 
 other attached packages:
- [1] clValid_0.6-9   cluster_2.1.0   gplots_3.0.3    Matrix_1.2-18  
+ [1] Matrix_1.2-18   SNFtool_2.3.0   SIMLR_1.12.0    abSNF_1.0.0    
  [5] forcats_0.5.0   stringr_1.4.0   dplyr_0.8.5     purrr_0.3.3    
  [9] readr_1.3.1     tidyr_1.0.2     tibble_3.0.0    ggplot2_3.3.0  
-[13] tidyverse_1.3.0 igraph_1.2.5    abSNF_1.0.0     SIMLR_1.12.0   
-[17] workflowr_1.6.2
+[13] tidyverse_1.3.0 igraph_1.2.5    workflowr_1.6.2
 
 loaded via a namespace (and not attached):
- [1] Rcpp_1.0.4.6       lubridate_1.7.8    lattice_0.20-41    class_7.3-16      
- [5] gtools_3.8.2       assertthat_0.2.1   rprojroot_1.3-2    digest_0.6.25     
- [9] RSpectra_0.16-0    R6_2.4.1           cellranger_1.1.0   backports_1.1.6   
-[13] reprex_0.3.0       evaluate_0.14      pracma_2.2.9       httr_1.4.1        
-[17] pillar_1.4.3       rlang_0.4.5        readxl_1.3.1       gdata_2.18.0      
-[21] rstudioapi_0.11    whisker_0.4        rmarkdown_2.1      munsell_0.5.0     
-[25] broom_0.5.5        compiler_3.6.2     httpuv_1.5.2       modelr_0.1.6      
-[29] xfun_0.12          pkgconfig_2.0.3    htmltools_0.4.0    tidyselect_1.0.0  
-[33] codetools_0.2-16   fansi_0.4.1        withr_2.1.2        crayon_1.3.4      
-[37] dbplyr_1.4.2       later_1.0.0        bitops_1.0-6       grid_3.6.2        
-[41] nlme_3.1-145       jsonlite_1.6.1     gtable_0.3.0       lifecycle_0.2.0   
-[45] DBI_1.1.0          git2r_0.26.1       magrittr_1.5       scales_1.1.0      
-[49] KernSmooth_2.23-16 cli_2.0.2          stringi_1.4.6      fs_1.4.1          
-[53] promises_1.1.0     xml2_1.3.0         ellipsis_0.3.0     generics_0.0.2    
-[57] vctrs_0.2.4        RcppAnnoy_0.0.16   tools_3.6.2        glue_1.4.0        
-[61] hms_0.5.3          yaml_2.2.1         colorspace_1.4-1   caTools_1.18.0    
-[65] rvest_0.3.5        knitr_1.28         haven_2.2.0       </code></pre>
+ [1] Rcpp_1.0.4.6       lubridate_1.7.8    lattice_0.20-41    assertthat_0.2.1  
+ [5] rprojroot_1.3-2    digest_0.6.25      RSpectra_0.16-0    R6_2.4.1          
+ [9] cellranger_1.1.0   backports_1.1.6    reprex_0.3.0       pracma_2.2.9      
+[13] evaluate_0.14      httr_1.4.1         pillar_1.4.3       rlang_0.4.5       
+[17] readxl_1.3.1       rstudioapi_0.11    whisker_0.4        rmarkdown_2.1     
+[21] munsell_0.5.0      broom_0.5.5        ExPosition_2.8.23  compiler_3.6.2    
+[25] httpuv_1.5.2       modelr_0.1.6       xfun_0.12          pkgconfig_2.0.3   
+[29] htmltools_0.4.0    tidyselect_1.0.0   codetools_0.2-16   fansi_0.4.1       
+[33] crayon_1.3.4       dbplyr_1.4.2       withr_2.1.2        later_1.0.0       
+[37] alluvial_0.1-2     grid_3.6.2         nlme_3.1-145       jsonlite_1.6.1    
+[41] gtable_0.3.0       lifecycle_0.2.0    DBI_1.1.0          git2r_0.26.1      
+[45] magrittr_1.5       prettyGraphs_2.1.6 scales_1.1.0       cli_2.0.2         
+[49] stringi_1.4.6      heatmap.plus_1.3   fs_1.4.1           promises_1.1.0    
+[53] xml2_1.3.0         ellipsis_0.3.0     generics_0.0.2     vctrs_0.2.4       
+[57] RcppAnnoy_0.0.16   tools_3.6.2        glue_1.4.0         hms_0.5.3         
+[61] yaml_2.2.1         colorspace_1.4-1   rvest_0.3.5        knitr_1.28        
+[65] haven_2.2.0       </code></pre>
+</div>
 </div>
 </div>
 
