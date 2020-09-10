@@ -8,7 +8,7 @@ editor_options:
 ---
 
 ```{r,include = F}
-# knitr::opts_knit$set("../")
+knitr::opts_knit$set("../")
 library(SIMLR)
 library(abSNF)
 library(igraph)
@@ -55,6 +55,20 @@ W2 = affinityMatrix(Dist2)
 
 W = SNF(list(W1, W2))
 cluster_SNF = spectralClustering(W, 3)
+```
+
+* here we are using 3 index to compare the clustering result
+```{r}
+cluster_purity = function(cluster, truth){
+  comp = as_tibble(cbind(cluster,truth))
+  purity = comp %>%
+    group_by(truth) %>% 
+    count(cluster) %>% 
+    summarise(purity = max(n)/sum(n)) %>% 
+    pull(purity)
+  return(purity)
+}
+cluster_purity(cluster = cluster_SNF, truth = truelabel)
 nmi_SNF = compare(cluster_SNF, truelabel,method = "nmi")
 rand_SNF = compare(cluster_SNF, truelabel,method = "rand")
 nmi_SNF
@@ -82,8 +96,11 @@ simlr_res_affSNF = SIMLR_multi_SNF(D_Kernels = D_kernels, c = 3, SNF_init = W)
 simlr_res_noSNF = SIMLR_multi(D_kernels, c = 3)
 ```
 
+* here we are using 3 index to compare the clustering result
 ```{r}
+cluster_purity(simlr_res_affSNF$y$cluster, truelabel)
 compare(simlr_res_affSNF$y$cluster, truelabel, method = "nmi")
+cluster_purity(simlr_res_noSNF$y$cluster, truelabel)
 compare(simlr_res_noSNF$y$cluster, truelabel, method = "nmi")
 ```
 
@@ -145,7 +162,9 @@ simlr_res_noSNF = SIMLR_multi(D_kernels, c = 3)
 ```
 
 ```{r}
+cluster_purity(simlr_res_affSNF$y$cluster, truelabel)
 compare(simlr_res_affSNF$y$cluster, truelabel, method = "nmi")
+cluster_purity(simlr_res_noSNF$y$cluster, truelabel)
 compare(simlr_res_noSNF$y$cluster, truelabel, method = "nmi")
 ```
 

@@ -1,0 +1,169 @@
+---
+title: "trivial_analysis"
+author: "yuqimiao"
+date: "2020-09-08"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+# For cluster evaluation index
+```{r}
+library(igraph)
+library(tidyverse)
+compare(rep(1:3,times = c(15,15,120)),rep(1:2, times = c(30,120)),method = "nmi")
+compare(rep(1:3,times = c(15,15,120)),rep(1:2, times = c(30,120)),method = "rand")
+```
+
+It can be seen that, using the rand and nmi as evaluation criterion, although A/B can't be divide, the index is also very high
+
+# simulation logic
+
+1. here we are assuming every data can only provide 1 division, which means for a type of data, we can only cluster to 2 subtypes;
+2. For this simulation setting, we can also expand our subtype number to 5 or 6, which can be divided by:
+
+for 5
+  * "12/345"
+  * "13/245"
+  * "14/235"
+
+for 6
+  * 123/456
+  * 145/236
+  * 124/356
+
+(use plot to show the division)
+
+we can directly change the sub_ratio, data_division to get 5 or 6 subtype
+```{r}
+# try using 4 groups divided by 3 types of data
+
+## input
+size = 240
+sub_ratio = c(rep(0.2,4),rep(0.1,2))
+eff_size = rep(5,3)
+sigma = 10
+data_divide ="123/456"
+dist = "normal"
+
+## calculate index_cut for given subtype ratio
+index_cut = cumsum(sub_ratio)*size
+index = list()
+for(i in 1:length(index_cut)){
+  if(i == 1){
+    index[[i]] = 1:index_cut[1]
+  }else{
+    index[[i]] = (index_cut[[i-1]]+1):index_cut[[i]]
+  }
+}
+
+### for a data
+data1 = matrix(0,size, 1000)
+divide = lapply(X = str_split(str_split(data_divide,pattern = "/")[[1]], pattern = ""), 
+                FUN = as.numeric
+                )
+ind1 = NULL
+for(i in 1:length(divide[[1]])){
+  ind1 = c(ind1, index[[divide[[1]][i]]])
+}
+ind2 = NULL
+for(i in 1:length(divide[[2]])){
+  ind2 = c(ind2, index[[divide[[2]][i]]])
+}
+if (dist == "normal"){
+  data1[ind1,1:50] = rnorm(length(ind1)*50, eff_size[1], sqrt(sigma))
+  data1[ind2,1:50] = rnorm(length(ind2)*50, -eff_size[1], sqrt(sigma))
+}else if(dist == "logit"){
+  data1[ind1,1:50] = sapply(X = rnorm(length(ind1)*50, eff_size[1], sqrt(sigma)),
+                            FUN = function(x) exp(x)/(1+exp(x))
+                            )
+  data1[ind2,1:50] = sapply(X = rnorm(length(ind2)*50, -eff_size[1], sqrt(sigma)),
+                            FUN = function(x) exp(x)/(1+exp(x))
+                            )
+}
+
+truelabel = NULL
+  for (i in 1:length(index)){
+    truelabel = c(truelabel, rep(i,length(index[[i]])))
+  }
+par(mfrow = c(2,1))
+hist(data1[1:120,1:50], main = "the first 3 subtype")
+hist(data1[121:200,1:50], main = " the latter 3 subtype")
+```
+3. For weight construction
+
+Using the best performance setting for abSNF( from peifeng's paper)
+```{r}
+n1 = 50*0.6#n1 is # of correct weights for informative features
+n2 = 950*0.8#n2 is # of correct weights for non-informative features
+r1 = 1
+r2 = 3
+uninfo_r1 = 0
+uninfo_r2 = 1
+#r1, r2, uninfo_r1, uninfo_r2 define the magnitude of correct wights 
+ge_weight=abs(runif(1000,0,1))
+s=sample(1:50,n1)
+ge_weight[s]=runif(n1,r1,r2)
+ss=sample(51:1000,n2)
+ge_weight[ss]=runif(n2,uninfo_r1,uninfo_r2)
+plot(1:1000, ge_weight)
+```
+
+# Steps for a single data:
+
+From every data type, we want to get the result:
+
+1. multiple kernels
+2. affinity matrix
+3. eigen gap result
+4. SIMLR result
+
+Firstly, for clarification, the affinity matrix gives the RBF kernels of the data, while the multiple kernel getting from SIMLR-multiple.kernel function gives the nomalized distance btw subjects, so we can't just using the averaged multiple kernel to do the SNF
+
+```{r}
+# check affinity matrix and kernels
+library(abSNF)
+library(SIMLR)
+library(SNFtool)
+library(parallel)
+library(Matrix)
+source("./code/R/compute.multiple.kernel.R")
+data1 = standardNormalization(data1)
+mk1 = multiple.kernel(data1)
+af1 = affinityMatrix(dist2_w(as.matrix(data1),as.matrix(data1), weight = ge_weight))
+par(mfrow = c(2,1))
+displayClusters(af1, truelabel)
+displayClusters(as.matrix(mk1[[1]]), truelabel)
+```
+
+## gap and SIMLR results 
+```{r}
+K = 2
+cores.ratio = 0.5
+gap1 = estimateNumberOfClustersGivenGraph(af1,2:5)$`Eigen-gap best`
+simlr1 = SIMLR(t(data1), K,cores.ratio = cores.ratio)
+nmi = compare(simlr1$y$cluster,truelabel, method = "nmi")
+rand = compare(simlr1$y$cluster,truelabel, method = "rand")
+nmi
+rand
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
