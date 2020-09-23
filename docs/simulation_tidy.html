@@ -9,9 +9,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
+<meta name="author" content="yuqimiao" />
 
+<meta name="date" content="2020-09-15" />
 
-<title>Home</title>
+<title>simulation_tidy</title>
 
 <script src="site_libs/header-attrs-2.1/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
@@ -20,6 +22,9 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -261,6 +266,69 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
 
 </head>
 
@@ -268,6 +336,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -311,7 +389,9 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Home</h1>
+<h1 class="title toc-ignore">simulation_tidy</h1>
+<h4 class="author">yuqimiao</h4>
+<h4 class="date">2020-09-15</h4>
 
 </div>
 
@@ -339,7 +419,7 @@ $(document).ready(function () {
 <strong>Last updated:</strong> 2020-09-23
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 2 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
 </p>
 <p>
 <strong>Knit directory:</strong> <code>multiomics-SIMLR/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
@@ -361,6 +441,66 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
 <div class="panel-body">
 <p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20200830code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20200830)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20200830code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20200830)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
 </div>
 </div>
 </div>
@@ -436,7 +576,7 @@ Note that any generated files, e.g. HTML, png, CSS, etc., are not included in t
 <div id="versions" class="tab-pane fade">
 
 <p>
-These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/index.Rmd</code>) and HTML (<code>docs/index.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/simulation_tidy.rmd</code>) and HTML (<code>docs/simulation_tidy.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
 </p>
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
@@ -465,7 +605,7 @@ Message
 Rmd
 </td>
 <td>
-<a href="https://github.com/yuqimiao/multiomics-SIMLR/blob/449a753080d36403e17e8be8a82a87c9df19282a/analysis/index.Rmd" target="_blank">449a753</a>
+<a href="https://github.com/yuqimiao/multiomics-SIMLR/blob/449a753080d36403e17e8be8a82a87c9df19282a/analysis/simulation_tidy.rmd" target="_blank">449a753</a>
 </td>
 <td>
 yuqimiao
@@ -477,91 +617,6 @@ yuqimiao
 update with new analysis
 </td>
 </tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/yuqimiao/multiomics-SIMLR/c9e9e6ab7acbd16e71931b45bdec06ddaa25850b/docs/index.html" target="_blank">c9e9e6a</a>
-</td>
-<td>
-yuqimiao
-</td>
-<td>
-2020-09-09
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/yuqimiao/multiomics-SIMLR/blob/5646f6e9094df9bbaea250091a4e469a61e2b7d0/analysis/index.Rmd" target="_blank">5646f6e</a>
-</td>
-<td>
-yuqimiao
-</td>
-<td>
-2020-09-09
-</td>
-<td>
-update index
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/yuqimiao/multiomics-SIMLR/b494a3f56a086af8d0be5fc6f4be09baa9551379/docs/index.html" target="_blank">b494a3f</a>
-</td>
-<td>
-yuqimiao
-</td>
-<td>
-2020-09-06
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/yuqimiao/multiomics-SIMLR/blob/a23b26de70d790d5a2a828555e15c1388533c107/analysis/index.Rmd" target="_blank">a23b26d</a>
-</td>
-<td>
-yuqimiao
-</td>
-<td>
-2020-09-06
-</td>
-<td>
-add index.html
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/yuqimiao/multiomics-SIMLR/blob/fb5c1d91841aa6f1f5d4e6af8f53cdfdcd660d85/analysis/index.Rmd" target="_blank">fb5c1d9</a>
-</td>
-<td>
-yuqimiao
-</td>
-<td>
-2020-08-30
-</td>
-<td>
-Start workflowr project.
-</td>
-</tr>
 </tbody>
 </table>
 </div>
@@ -569,21 +624,113 @@ Start workflowr project.
 </div>
 </div>
 </div>
-<p>Welcome to my research website. # Introduction</p>
-<div id="goal-of-study" class="section level2">
-<h2>Goal of Study</h2>
-<p>Complex diseases, like cancer, are typically multi-pathogenesis on genomic aspect. Different treatment could be developed accordingly if the subtype of disease can be correctly specified. In this study, we try to develop a new method to build similarity networks between patients based on the integrated multi-omics data, and using spectral clustering for further subtypes identification.</p>
+<pre class="r"><code>source(&quot;./code/functions/simulation_tidy.R&quot;)
+library(tidyverse)</code></pre>
+<pre><code>── Attaching packages ─────────────────────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
+<pre><code>✓ ggplot2 3.3.0     ✓ purrr   0.3.3
+✓ tibble  3.0.0     ✓ dplyr   0.8.5
+✓ tidyr   1.0.2     ✓ stringr 1.4.0
+✓ readr   1.3.1     ✓ forcats 0.5.0</code></pre>
+<pre><code>── Conflicts ────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+x dplyr::filter() masks stats::filter()
+x dplyr::lag()    masks stats::lag()</code></pre>
+<div id="data-divide-3-groups-with-variance-10" class="section level1">
+<h1>2 data divide 3 groups with variance 10</h1>
+<pre class="r"><code>ave_2d_3g_10v = job_combine(path = &quot;./data/simulation_var10_50/&quot;, pattern = &quot;mean&quot;, scenario_add = T)
+all_2d_3g_10v  = job_combine(path = &quot;./data/simulation_var10_50/&quot;, pattern = &quot;all&quot;, scenario_add = T)
+
+improve_10v = 
+  ave_2d_3g_10v %&gt;% 
+  mutate(improve_nmi = nmi_SIMLR-nmi_SNF ) %&gt;% 
+  filter(cluster == 3) %&gt;% 
+  arrange(desc(improve_nmi))</code></pre>
 </div>
-<div id="timeline-and-major-completed-tasks" class="section level2">
-<h2>Timeline and major completed tasks</h2>
-<p>May 20th - June 20th Paper reading and Topic choosing June 20th - July 6th Paper details learning and theory developing July 6th - July 31st multi-omics data analysis trial for SIMLR-Integration (with small data analysis project for covid ) August 2nd - August 31st Simulation and new methods developing</p>
+<div id="data-divide-3-groups-with-variance-according-to-effective-size" class="section level1">
+<h1>2 data divide 3 groups with variance according to effective size</h1>
+<pre class="r"><code>## use normalization 
+
+ave_2d_3g_cv = job_combine(path = &quot;./data/simulation_2data/&quot;,pattern = &quot;mean&quot;,scenario_add = T)
+
+improve_cv = 
+  ave_2d_3g_cv %&gt;% 
+  mutate(improve_nmi = nmi_SIMLR-nmi_SNF ) %&gt;% 
+  filter(cluster == 3) %&gt;% 
+  filter(str_detect(scenario, &quot;nn_sub111_eff73&quot;)) %&gt;% 
+  arrange(desc(improve_nmi))
+  
+View(ave_2d_3g_cv %&gt;% 
+  filter(str_detect(scenario,&quot;nn_sub111_eff55&quot;)))
+all_2d_3g_cv = job_combine(path = &quot;./data/simulation_2data/&quot;,pattern = &quot;all&quot;,scenario_add = T)
+
+View(all_2d_3g_cv %&gt;% 
+  filter(str_detect(scenario,&quot;nn_sub111_eff55&quot;)) %&gt;% 
+    filter(cluster == 3))</code></pre>
 </div>
-<div id="analysis-and-methods" class="section level1">
-<h1>Analysis and methods</h1>
-<ol style="list-style-type: decimal">
-<li>The simulation progress now is shown <a href="simulation_tidy.html">here</a></li>
-<li>Some trivial analysis can be found <a href="trivial_analysis.html">here</a></li>
-</ol>
+<div id="balanced_weight" class="section level1">
+<h1>balanced_weight</h1>
+<pre class="r"><code>load(&quot;./data/table_balance_3d3g.Rdata&quot;,verbose = T)</code></pre>
+<pre><code>Loading objects:
+  table_balance</code></pre>
+</div>
+<div id="normalization" class="section level1">
+<h1>Normalization</h1>
+<pre class="r"><code>table_norm = job_combine(path =  &quot;./data/simulation_normalization/&quot;,pattern = &quot;.*&quot;)
+
+View(table_norm %&gt;% 
+       filter(str_detect(scenario,&quot;111_19&quot;)) %&gt;% 
+       group_by(scenario,cluster) %&gt;% 
+       summarise_all(mean)
+     )
+
+View(table_norm %&gt;% 
+       filter(str_detect(scenario,&quot;111_34&quot;)) %&gt;% 
+       group_by(scenario,cluster) %&gt;% 
+       summarise_all(mean)
+     )</code></pre>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 3.6.2 (2019-12-12)
+Platform: x86_64-apple-darwin15.6.0 (64-bit)
+Running under: macOS Catalina 10.15.2
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRblas.0.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] forcats_0.5.0   stringr_1.4.0   dplyr_0.8.5     purrr_0.3.3    
+ [5] readr_1.3.1     tidyr_1.0.2     tibble_3.0.0    ggplot2_3.3.0  
+ [9] tidyverse_1.3.0 workflowr_1.6.2
+
+loaded via a namespace (and not attached):
+ [1] tidyselect_1.0.0 xfun_0.12        haven_2.2.0      lattice_0.20-41 
+ [5] colorspace_1.4-1 vctrs_0.2.4      generics_0.0.2   htmltools_0.4.0 
+ [9] yaml_2.2.1       rlang_0.4.5      later_1.0.0      pillar_1.4.3    
+[13] withr_2.1.2      glue_1.4.0       DBI_1.1.0        dbplyr_1.4.2    
+[17] readxl_1.3.1     modelr_0.1.6     lifecycle_0.2.0  cellranger_1.1.0
+[21] munsell_0.5.0    gtable_0.3.0     rvest_0.3.5      evaluate_0.14   
+[25] knitr_1.28       httpuv_1.5.2     fansi_0.4.1      broom_0.5.5     
+[29] Rcpp_1.0.4.6     promises_1.1.0   backports_1.1.6  scales_1.1.0    
+[33] jsonlite_1.6.1   fs_1.4.1         hms_0.5.3        digest_0.6.25   
+[37] stringi_1.4.6    rprojroot_1.3-2  grid_3.6.2       cli_2.0.2       
+[41] tools_3.6.2      magrittr_1.5     crayon_1.3.4     whisker_0.4     
+[45] pkgconfig_2.0.3  ellipsis_0.3.0   xml2_1.3.0       reprex_0.3.0    
+[49] lubridate_1.7.8  rstudioapi_0.11  assertthat_0.2.1 rmarkdown_2.1   
+[53] httr_1.4.1       R6_2.4.1         nlme_3.1-145     git2r_0.26.1    
+[57] compiler_3.6.2  </code></pre>
+</div>
 </div>
 
 
@@ -602,6 +749,8 @@ footer is added to webpages before the MathJax javascript. -->
 
 
 
+</div>
+</div>
 
 </div>
 
@@ -634,6 +783,32 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
