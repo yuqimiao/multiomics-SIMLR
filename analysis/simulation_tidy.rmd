@@ -1,0 +1,75 @@
+---
+title: "simulation_tidy"
+author: "yuqimiao"
+date: "2020-09-15"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+```{r}
+source("./code/functions/simulation_tidy.R")
+library(tidyverse)
+```
+
+# 2 data divide 3 groups with variance 10
+
+```{r}
+ave_2d_3g_10v = job_combine(path = "./data/simulation_var10_50/", pattern = "mean", scenario_add = T)
+all_2d_3g_10v  = job_combine(path = "./data/simulation_var10_50/", pattern = "all", scenario_add = T)
+
+improve_10v = 
+  ave_2d_3g_10v %>% 
+  mutate(improve_nmi = nmi_SIMLR-nmi_SNF ) %>% 
+  filter(cluster == 3) %>% 
+  arrange(desc(improve_nmi))
+```
+
+# 2 data divide 3 groups with variance according to effective size
+
+```{r}
+## use normalization 
+
+ave_2d_3g_cv = job_combine(path = "./data/simulation_2data/",pattern = "mean",scenario_add = T)
+
+improve_cv = 
+  ave_2d_3g_cv %>% 
+  mutate(improve_nmi = nmi_SIMLR-nmi_SNF ) %>% 
+  filter(cluster == 3) %>% 
+  filter(str_detect(scenario, "nn_sub111_eff73")) %>% 
+  arrange(desc(improve_nmi))
+  
+View(ave_2d_3g_cv %>% 
+  filter(str_detect(scenario,"nn_sub111_eff55")))
+all_2d_3g_cv = job_combine(path = "./data/simulation_2data/",pattern = "all",scenario_add = T)
+
+View(all_2d_3g_cv %>% 
+  filter(str_detect(scenario,"nn_sub111_eff55")) %>% 
+    filter(cluster == 3))
+  
+```
+
+# balanced_weight
+
+```{r}
+load("./data/table_balance_3d3g.Rdata",verbose = T)
+```
+
+# Normalization
+
+```{r}
+table_norm = job_combine(path =  "./data/simulation_normalization/",pattern = ".*")
+
+View(table_norm %>% 
+       filter(str_detect(scenario,"111_19")) %>% 
+       group_by(scenario,cluster) %>% 
+       summarise_all(mean)
+     )
+
+View(table_norm %>% 
+       filter(str_detect(scenario,"111_34")) %>% 
+       group_by(scenario,cluster) %>% 
+       summarise_all(mean)
+     )
+```
+
