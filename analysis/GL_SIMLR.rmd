@@ -378,7 +378,7 @@ nmi_balanced_div2 = nmi_mean %>%
     names_to = "methods",
     values_to = "nmi"
   ) %>% 
-  filter(str_detect(methods, "gl")) %>% 
+  # filter(str_detect(methods, "gl")) %>% 
   ggplot(aes(x = eff, y = nmi, color = methods, group = methods))+
   geom_line()+
   geom_point()+
@@ -394,7 +394,7 @@ nmi_balanced_div4 = nmi_mean %>%
     names_to = "methods",
     values_to = "nmi"
   ) %>% 
-  filter(str_detect(methods, "gl")) %>% 
+  # filter(str_detect(methods, "gl")) %>% 
   ggplot(aes(x = eff, y = nmi, color = methods, group = methods))+
   geom_line()+
   geom_point()+
@@ -403,6 +403,9 @@ nmi_balanced_div4 = nmi_mean %>%
   ggtitle("balanced_div4")
 library(patchwork)
 nmi_balanced_div2+nmi_balanced_div4
+library(plotly)
+ggplotly(p = nmi_balanced_div2)
+ggplotly(p = nmi_balanced_div4)
 ```
 
 ## weight comparison

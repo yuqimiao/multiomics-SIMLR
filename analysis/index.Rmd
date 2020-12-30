@@ -25,3 +25,4 @@ August 2nd - August 31st Simulation and new methods developing
 
 1. The simulation progress now is shown [here](simulation_tidy.html)
 2. Some trivial analysis can be found [here](trivial_analysis.html)
+3. GL_simlr analysis is [here](GL_SIMLR.html)
