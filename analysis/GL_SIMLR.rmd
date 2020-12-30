@@ -1,0 +1,450 @@
+---
+title: "GL_SIMLR"
+author: "yuqimiao"
+date: "2020-10-06"
+output: workflowr::wflow_html
+editor_options:
+  chunk_output_type: console
+---
+
+This is the exploration analysis page for the Global Local SIMLR algorithm
+
+The main thoughts of the new algorithm is to using both the local and global information in weight optimization, the details is in Derivation/GL_SIMLR.pdf
+
+
+
+```{r}
+## package loading
+library(tidyverse)
+library(parallel)
+library(clValid)
+library(abSNF)
+library(SNFtool)
+library(igraph)
+library(Matrix)
+library(CancerSubtypes)
+
+## mwe data
+source("code/functions/simulation_function.R")
+source("code/R/compute.multiple.kernel.R")
+source("code/functions/simulation_verify.R")
+source("./code/functions/gl_simlr.R")
+
+```
+
+# example usage
+
+For the example run, using simulation scenario where the effective size are 2,3,5 respectively for 3 data types.
+separating cluster 12/34,13/24,14/23 separately.
+
+More scenario will be include in simulation
+
+```{r}
+set.seed(124)
+sim = simulation_3(eff_size = c(2,3,5), sigma = rep(100,3))
+data_list = list(data1 = standardNormalization(t(sim$data1)),
+                 data2 = standardNormalization(t(sim$data2)),
+                 data3 = standardNormalization(t(sim$data3)))
+## GL_SIMLR_1 
+gl_result = GL_SIMLR_1(data_list = data_list)
+gl_result_3 = GL_SIMLR_4(data_list = data_list)
+
+
+igraph::compare(gl_result$cluster,sim$truelabel,method = "rand")
+igraph::compare(gl_result_3$cluster,sim$truelabel,method = "rand")
+igraph::compare(gl_result$cluster,sim$truelabel,method = "nmi")
+igraph::compare(gl_result_3$cluster,sim$truelabel,method = "nmi")
+
+gl_result$w_list
+gl_result_3$w_list
+gl_result$cluster
+gl_result_3$cluster
+
+sort(desc(gl_result$converge),index.return = T)
+
+gl_result_3$converge
+gl_result$converge
+```
+
+
+
+
+
+# 1 term configuration
+
+```{r}
+## show the major contribution of weight from trace term
+## one time, iteration compare the relationship between GL_trace and weight
+par = list()
+sub_ratio_ls = list(rep(1/4,4), c(0.1,0.2,0.3,0.4))
+sample_size_ls = c(120,200)
+eff_size_ls = list(c(1,1,1),c(1,3,3),c(1,3,5))
+sigma_ls = c(1,10,100)
+load("./data/configuration_data_40.Rdata")
+
+g1 = as_tibble(W_g$GL_trace_all) %>% 
+  mutate(ID = seq_along(V1)) %>% 
+  pivot_longer(
+    V1:V3,
+    names_to = "data_type",
+    values_to = "GL_trace"
+  ) %>% 
+  ggplot(aes(x = ID, y = GL_trace, color = data_type, group = data_type))+
+  geom_line()+
+  facet_grid(data_type~., scale = "free")
+
+g2 = as_tibble(W_g$w_list_all) %>% 
+  mutate(ID = seq_along(V1)) %>% 
+  pivot_longer(
+    V1:V3,
+    names_to = "data_type",
+    values_to = "weight"
+  ) %>% 
+  ggplot(aes(x = ID, y = weight, color = data_type, group = data_type))+
+  geom_line()+
+  facet_grid(data_type~., scale = "free")
+library(patchwork)
+g1+g2
+```
+
+
+```{r}
+## load simulated data
+eva_nmi = NULL
+eva_rand = NULL
+gl_weight = NULL
+global_local = NULL
+GL_trace = NULL
+tunning_crit = NULL
+gl_weight = NULL
+tunning_best = NULL
+files = list.files("./data/simu_1220/")
+for(i in 1:length(files)){
+  load(file = paste("./data/simu_1220/", files[i], sep = ""))
+  eva_nmi = rbind(eva_nmi,res$eva_nmi)
+  eva_rand = rbind(eva_rand, res$eva_rand)
+  gl_weight = rbind(gl_weight, res$gl_weight)
+  global_local = rbind(global_local, res$global_local)
+  GL_trace = rbind(GL_trace,res$GL_trace)
+  tunning_crit = rbind(tunning_crit, res$tunning_res)
+  tunning_best = rbind(tunning_best, res$tunning_best)
+  gl_weight = rbind(gl_weight, res$gl_weight)
+}
+# scenario_name = c(paste("n120", c(paste("eff111", paste("sig",sigma_ls, sep = ""),sep = "_"),
+#                                      paste("eff133", paste("sig",sigma_ls, sep = ""),sep = "_"),
+#                                      paste("eff135", paste("sig",sigma_ls, sep = ""),sep = "_")),
+#                         sep = "_"),
+#                   paste("n200", c(paste("eff111", paste("sig",sigma_ls, sep = ""),sep = "_"),
+#                                      paste("eff133", paste("sig",sigma_ls, sep = ""),sep = "_"),
+#                                      paste("eff135", paste("sig",sigma_ls, sep = ""),sep = "_")),
+#                         sep = "_")
+# )
+# scenario_n = rep(scenario_name,100)
+
+## show that no clear difference between with/without beta
+eva_nmi %>% 
+    # mutate(scenario = scenario_n) %>% 
+    group_by(scenario) %>%
+    summarise_all(mean)
+
+eva_rand %>% 
+  group_by(scenario) %>%
+  summarise_all(mean)
+  
+eva_nmi %>% 
+  group_by(scenario) %>%
+  summarise_all(mean) %>% 
+  pivot_longer(
+    nmi_spec_s:nmi_spec_gt,
+    names_to = "methods",
+    values_to = "nmi"
+  ) %>% 
+  separate(scenario, into = c("size","eff_size","sigma"),sep = "_") %>% 
+  ggplot(aes(x = eff_size, y = nmi, group = methods, color = methods))+
+  geom_line(alpha = 0.5)+
+  geom_point(alpha = 0.5)+
+  facet_grid(size~sigma)
+
+eva_rand  %>% 
+  group_by(scenario) %>%
+  summarise_all(mean) %>% 
+  pivot_longer(
+    rand_spec_c:rand_spec_gt,
+    names_to = "methods",
+    values_to = "rand"
+  ) %>% 
+  separate(scenario, into = c("size","eff_size","sigma"),sep = "_") %>% 
+  ggplot(aes(x = eff_size, y = rand, group = methods, color = methods))+
+  geom_line(alpha = 0.5)+
+  geom_point(alpha = 0.5)+
+  facet_grid(size~sigma)
+
+
+eva_rand %>% 
+  # mutate(scenario = scenario_n) %>% 
+  dplyr::select(scenario = scenario, concatenate = rand_spec_c, MKL = rand_spec_g, snf = rand_spec_s) %>% 
+  group_by(scenario) %>%
+  summarise_all(mean) %>% 
+  pivot_longer(
+    concatenate:snf,
+    names_to = "methods",
+    values_to = "rand"
+  ) %>% 
+  separate(scenario, into = c("size","eff_size","sigma"),sep = "_") %>% 
+  ggplot(aes(x = eff_size, y = rand, group = methods, color = methods))+
+  geom_line(alpha = 0.5)+
+  geom_point(alpha = 0.5)+
+  facet_grid(size~sigma)
+```
+
+
+```{r}
+### show the trivial distance between glocal and local term
+global_local %>%
+  # mutate(scenario = rep(scenario_n,each = 3)) %>% 
+  mutate(scenario = str_replace_all(scenario,"[a-z]","")) %>%
+  group_by(scenario,type) %>%
+  summarise_all(mean) %>% 
+  pivot_longer(
+    global_GL:local_GL_tunn,
+    names_to = "term",
+    values_to = "value"
+  ) %>%
+  ggplot(aes(x = scenario, y = value, color = as.factor(type), group = as.factor(type)))+
+  geom_line()+
+  facet_grid(term~.)+
+  theme(legend.position = "bottom")
+
+g1 = global_local %>%
+  # mutate(scenario = rep(scenario_n,each = 3)) %>% 
+  mutate(scenario = str_replace_all(scenario,"[a-z]","")) %>%
+  group_by(scenario,type) %>%
+  summarise_all(mean) %>% 
+  filter(str_detect(scenario,"120")) %>% 
+  pivot_longer(
+    global_GL:local_GL_tunn,
+    names_to = "term",
+    values_to = "value"
+  ) %>%
+  ggplot(aes(x = scenario, y = value, color = as.factor(type), group = as.factor(type)))+
+  geom_line()+
+  facet_grid(term~.)
+
+g2 = global_local %>%
+  # mutate(scenario = rep(scenario_n,each = 3)) %>% 
+  mutate(scenario = str_replace_all(scenario,"[a-z]","")) %>%
+  group_by(scenario,type) %>%
+  summarise_all(mean) %>% 
+  filter(str_detect(scenario,"200")) %>% 
+  pivot_longer(
+    global_GL:local_GL_tunn,
+    names_to = "term",
+    values_to = "value"
+  ) %>%
+  ggplot(aes(x = scenario, y = value, color = as.factor(type), group = as.factor(type)))+
+  geom_line()+
+  facet_grid(term~.)
+g1/g2
+```
+
+show the contribution of global/local term
+```{r}
+gl_weight %>%
+  # mutate(scenario = rep(scenario_n,each = 3)) %>% 
+  mutate(scenario = str_replace_all(scenario,"[a-z]","")) %>%
+  group_by(scenario,type) %>%
+  summarise_all(mean) %>%
+  pivot_longer(
+    GL:GL_nbeta,
+    names_to = "term",
+    values_to = "value"
+  ) %>%
+  ggplot(aes(x = scenario, y = value, color = as.factor(type), group = as.factor(type)))+
+  geom_line()+
+  facet_grid(term~.)+
+  theme(legend.position = "bottom")
+```
+
+
+```{r}
+## show the comparability of Global-local term and the GL_trace
+
+compare_gl_term = 
+  global_local %>% 
+  mutate(simulation = rep(1:100, each = 54)) %>% 
+  group_by(simulation,scenario) %>% 
+  mutate_all(function(x)(x-mean(x)))%>% 
+  ungroup(simulation,scenario) %>% 
+  group_by(scenario,type) %>% 
+  summarise_all(mean)
+
+compare_trace_term = 
+  GL_trace %>% 
+  mutate(simulation = rep(1:100, each = 54)) %>% 
+  group_by(simulation,scenario) %>% 
+  mutate_all(function(x)(x-mean(x))) %>% 
+  ungroup(simulation,scenario) %>% 
+  group_by(scenario,type) %>% 
+  summarise_all(mean)
+
+compare_gl_term
+compare_trace_term
+```
+
+
+```{r,include=F}
+## Parameter tunning
+## show the relationship between silouette and nmi/rand
+tunning_crit %>%
+  pivot_longer(
+    silourtte:rand,
+    names_to = "measure",
+    values_to = "value"
+    ) %>%
+  ggplot(aes(x = rho, y = value, color = measure, group = measure)) +
+  geom_line() +
+  facet_grid(measure~., scale = "free")
+
+tunning_crit %>%
+  pivot_longer(
+    nmi:rand,
+    names_to = "measure",
+    values_to = "value"
+    ) %>%
+  ggplot(aes(x = silourtte, y = value, color = measure, group = measure)) +
+  geom_line() +
+  facet_grid(measure~., scale = "free")
+
+  
+
+## best rho
+tunning_best %>% 
+  mutate(scenario = str_replace_all(scenario,"[a-z]","")) %>%
+  ggplot(aes(x = scenario,y = rho_opt)) +
+  geom_boxplot()
+
+## show the relationship between gl_trace, global_local_term and best rho
+tunning_best %>% 
+  group_by(scenario) %>%
+  summarise_all(mean) %>%
+  pivot_longer(
+    gl_opt:GL_trace_opt,
+    names_to = "term",
+    values_to = "value"
+  ) %>% 
+  ggplot(aes(x = rho_opt,y = value,color = term, group = term)) +
+  geom_line()+
+  facet_grid(term~., scale = "free")
+```
+
+
+
+
+
+# 2 simulation result comparison
+
+```{r}
+eva_nmi = NULL
+eva_rand = NULL
+gl_weight = NULL
+global_local = NULL
+GL_trace = NULL
+tunning_crit = NULL
+gl_weight = NULL
+tunning_best = NULL
+files = list.files("./data/simu_1229/")
+for(i in 1:length(files)){
+  load(file = paste("./data/simu_1229/", files[i], sep = ""))
+  eva_nmi = rbind(eva_nmi,res$eva_nmi)
+  eva_rand = rbind(eva_rand, res$eva_rand)
+  gl_weight = rbind(gl_weight, res$gl_weight)
+}
+```
+
+## nmi comparison
+
+```{r}
+nmi_mean = eva_nmi %>% 
+  group_by(scenario) %>% 
+  summarise_all(mean) %>% 
+  separate(scenario,into = c("ratio","eff","sigma","div"), sep = "_")
+
+
+nmi_balanced_div2 = nmi_mean %>% 
+  filter(ratio == "sub1111"&div == "div2") %>% 
+  dplyr::select(eff, sigma,concatenation = nmi_spec_c, SNF = nmi_spec_s, absnf = nmi_spec_abs, gl = nmi_spec_g2, gl_nogl = nmi_spec_g2_nogl) %>% 
+  pivot_longer(
+    concatenation:gl_nogl,
+    names_to = "methods",
+    values_to = "nmi"
+  ) %>% 
+  filter(str_detect(methods, "gl")) %>% 
+  ggplot(aes(x = eff, y = nmi, color = methods, group = methods))+
+  geom_line()+
+  geom_point()+
+  facet_grid(sigma~.)+
+  theme(legend.position = "bottom")+
+  ggtitle("balanced_div2")
+
+nmi_balanced_div4 = nmi_mean %>% 
+  filter(ratio == "sub1111"&div == "div4") %>% 
+  dplyr::select(eff, sigma,concatenation = nmi_spec_c, SNF = nmi_spec_s, absnf = nmi_spec_abs, gl = nmi_spec_g2, gl_nogl = nmi_spec_g2_nogl) %>% 
+  pivot_longer(
+    concatenation:gl_nogl,
+    names_to = "methods",
+    values_to = "nmi"
+  ) %>% 
+  filter(str_detect(methods, "gl")) %>% 
+  ggplot(aes(x = eff, y = nmi, color = methods, group = methods))+
+  geom_line()+
+  geom_point()+
+  facet_grid(sigma~.)+
+  theme(legend.position = "bottom")+
+  ggtitle("balanced_div4")
+library(patchwork)
+nmi_balanced_div2+nmi_balanced_div4
+```
+
+## weight comparison
+
+```{r}
+weight_2methods = as_tibble(gl_weight) %>% 
+  separate(scenario,into = c("ratio","eff","sigma","div"), sep = "_") %>%
+  filter(ratio == "sub1111"&div == "div4") %>%
+  dplyr::select(eff,sigma,type,gl = GL2, gl_nogl = GL2_nogl) %>% 
+  pivot_longer(
+    gl:gl_nogl,
+    names_to = "methods",
+    values_to = "weights"
+  ) %>% 
+  ggplot(aes(x = factor(type), y = weights, color = methods))+
+  geom_boxplot()+
+  facet_grid(eff~sigma)
+
+weight_gl = as_tibble(gl_weight) %>% 
+  separate(scenario,into = c("ratio","eff","sigma","div"), sep = "_") %>%
+  filter(ratio == "sub1111"&div == "div4") %>%
+  dplyr::select(eff,sigma,type,weights = GL2) %>% 
+  ggplot(aes(x = factor(type), y = weights))+
+  geom_boxplot(color = "red")+
+  facet_grid(eff~sigma)+
+  ggtitle("gl_weights")
+
+weight_glno = as_tibble(gl_weight) %>% 
+  separate(scenario,into = c("ratio","eff","sigma","div"), sep = "_") %>%
+  filter(ratio == "sub1111"&div == "div4") %>%
+  dplyr::select(eff,sigma,type,weights = GL2_nogl) %>% 
+  ggplot(aes(x = factor(type), y = weights))+
+  geom_boxplot(color = "blue")+
+  facet_grid(eff~sigma)+
+  ggtitle("gl_nogl_weights")
+  
+weight_glno+weight_gl
+```
+
+
+
+
+
+
+

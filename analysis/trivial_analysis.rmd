@@ -1,5 +1,5 @@
 ---
-title: "trivial_analysis"
+title: "Problem Intro and simulation setting"
 author: "yuqimiao"
 date: "2020-09-08"
 output: workflowr::wflow_html
@@ -7,163 +7,102 @@ editor_options:
   chunk_output_type: console
 ---
 
-# For cluster evaluation index
 ```{r}
-library(igraph)
+library(SNFtool)
+library(rlist)
 library(tidyverse)
-compare(rep(1:3,times = c(15,15,120)),rep(1:2, times = c(30,120)),method = "nmi")
-compare(rep(1:3,times = c(15,15,120)),rep(1:2, times = c(30,120)),method = "rand")
-```
-
-It can be seen that, using the rand and nmi as evaluation criterion, although A/B can't be divide, the index is also very high
-
-# simulation logic
-
-1. here we are assuming every data can only provide 1 division, which means for a type of data, we can only cluster to 2 subtypes;
-2. For this simulation setting, we can also expand our subtype number to 5 or 6, which can be divided by:
-
-for 5
-  * "12/345"
-  * "13/245"
-  * "14/235"
-
-for 6
-  * 123/456
-  * 145/236
-  * 124/356
-
-(use plot to show the division)
-
-we can directly change the sub_ratio, data_division to get 5 or 6 subtype
-```{r}
-# try using 4 groups divided by 3 types of data
-
-## input
-size = 240
-sub_ratio = c(rep(0.2,4),rep(0.1,2))
-eff_size = rep(5,3)
-sigma = 10
-data_divide ="123/456"
-dist = "normal"
-
-## calculate index_cut for given subtype ratio
-index_cut = cumsum(sub_ratio)*size
-index = list()
-for(i in 1:length(index_cut)){
-  if(i == 1){
-    index[[i]] = 1:index_cut[1]
-  }else{
-    index[[i]] = (index_cut[[i-1]]+1):index_cut[[i]]
-  }
-}
-
-### for a data
-data1 = matrix(0,size, 1000)
-divide = lapply(X = str_split(str_split(data_divide,pattern = "/")[[1]], pattern = ""), 
-                FUN = as.numeric
-                )
-ind1 = NULL
-for(i in 1:length(divide[[1]])){
-  ind1 = c(ind1, index[[divide[[1]][i]]])
-}
-ind2 = NULL
-for(i in 1:length(divide[[2]])){
-  ind2 = c(ind2, index[[divide[[2]][i]]])
-}
-if (dist == "normal"){
-  data1[ind1,1:50] = rnorm(length(ind1)*50, eff_size[1], sqrt(sigma))
-  data1[ind2,1:50] = rnorm(length(ind2)*50, -eff_size[1], sqrt(sigma))
-}else if(dist == "logit"){
-  data1[ind1,1:50] = sapply(X = rnorm(length(ind1)*50, eff_size[1], sqrt(sigma)),
-                            FUN = function(x) exp(x)/(1+exp(x))
-                            )
-  data1[ind2,1:50] = sapply(X = rnorm(length(ind2)*50, -eff_size[1], sqrt(sigma)),
-                            FUN = function(x) exp(x)/(1+exp(x))
-                            )
-}
-
-truelabel = NULL
-  for (i in 1:length(index)){
-    truelabel = c(truelabel, rep(i,length(index[[i]])))
-  }
-par(mfrow = c(2,1))
-hist(data1[1:144,1:50], main = "the first 3 subtype")
-hist(data1[145:200,1:50], main = " the latter 3 subtype")
-```
-3. For weight construction
-
-Using the best performance setting for abSNF( from peifeng's paper)
-```{r}
-n1 = 50*0.6#n1 is # of correct weights for informative features
-n2 = 950*0.8#n2 is # of correct weights for non-informative features
-r1 = 1
-r2 = 3
-uninfo_r1 = 0
-uninfo_r2 = 1
-#r1, r2, uninfo_r1, uninfo_r2 define the magnitude of correct wights 
-ge_weight=abs(runif(1000,0,1))
-s=sample(1:50,n1)
-ge_weight[s]=runif(n1,r1,r2)
-ss=sample(51:1000,n2)
-ge_weight[ss]=runif(n2,uninfo_r1,uninfo_r2)
-plot(1:1000, ge_weight)
-```
-
-## Steps for a single data:
-
-From every data type, we want to get the result:
-
-1. multiple kernels
-2. affinity matrix
-3. eigen gap result
-4. SIMLR result
-
-Firstly, for clarification, the affinity matrix gives the RBF kernels of the data, while the multiple kernel getting from SIMLR-multiple.kernel function gives the nomalized distance btw subjects, so we can't just using the averaged multiple kernel to do the SNF
-
-```{r}
-# check affinity matrix and kernels
 library(abSNF)
 library(SIMLR)
-library(SNFtool)
 library(parallel)
 library(Matrix)
 source("./code/R/compute.multiple.kernel.R")
-data1 = standardNormalization(data1)
-mk1 = multiple.kernel(data1)
-af1 = affinityMatrix(dist2_w(as.matrix(data1),as.matrix(data1), weight = ge_weight))
-par(mfrow = c(2,1))
-displayClusters(af1, truelabel)
-displayClusters(as.matrix(mk1[[1]]), truelabel)
+source("./code/functions/simulation_function.R")
 ```
 
-## gap and SIMLR results 
+# Goal of study
+
+We want to find a data integration method which can accurately identify the subtypes embeded in multi-omics data of patients.
+
+## Problems want to solve in this method
+
+1. Find the structure of different omics data, and compare similarity/difference;
+2. Integrate complementary information from multi-omics data to capture as much as subtype information as possible;
+3. Avoid influence from noise features.
+
+# simulation logic
+
+## Mechanism and characteristics parameters
+
+The goal of simulation is to embed differences in the signal features of different subtypes. Although for the same set of samples, they could imply different cluster information, and the difference can be shown from the effective size, the noise-to-signal ratio, the cluster type seperation and the feature distribution type.
+
+Here we have 2 different settings to imply 2 scenarios:
+
+Assuming 200 samples in 4 different subtypes, overall 4 data types. Every data type has 1000 features, with different noise-signal ratio and feature variance. The signal features are coming from different distributions with different parameters for different subtypes, which is the mechanism to generate subtype difference.
+
+More specifically, let's assume the first data type (n = 200 * p = 1000) can separate 4 subtypes with balanced subtype ratio(50 subjects per subtype). The first 50 features are the signals which actually effective in subtype separation. For the first subtype, the 50 feature signal are generated from $N(\mu_1, \sigma^2)$, the second subtype, $N(\mu_2, \sigma^2)$ and so on, thus, the difference between $\mu_i$ and the size of $\sigma$ will influence the degree of separation of 4 subtypes. Also, not all features would follow a normal distribution. For example, beta measurement of methylation rates for a CpG sites could follow a beta distrbution.
+
+## [NEW] Information possession setting 
+
+Besides the subtype ratio, $\mu_i$ and $\sigma$ and distribution type, there is another factor could influence the result of integration. Different data types could include different separation information. For example, subtype A and B have analygous gene expression profile, and subtype C and D also have analygous gene expression profile, but the subtype combinations A&B and C&D may have different gene expression profile. In this setting, using gene expression data only, we can separate A&B and C&D as 2 subtypes. Similarly, methylation data can separate A&C and B&D as 2 subtypes. In this setting, if we can properly integrate these 2 data types, we can have 4 subtype groups.But there are many possibilities for the information possession setting for each data type. Here we only consider 2 easy scenario.
+
+1) different types of data imply same cluster information
+
+Here we assume all data types reflect same clustering information, which means all data types can separate 4 different subtypes with similar clustering analogy. We can assume for data type m, the signal features for 4 subtypes comes from $N(\mu_{im}, \sigma^2), i = 1,2,3,4$ separately. We set the parameter: $\{\mu_{im}\} = \{-\mu_m,\mu_m,-2\mu_m,2\mu_m\}$
+
 ```{r}
-K = 2
-cores.ratio = 0.5
-gap1 = estimateNumberOfClustersGivenGraph(af1,2:5)$`Eigen-gap best`
-simlr1 = SIMLR(t(data1), K,cores.ratio = cores.ratio)
-nmi = compare(simlr1$y$cluster,truelabel, method = "nmi")
-rand = compare(simlr1$y$cluster,truelabel, method = "rand")
-nmi
-rand
+source("./code/functions/simulation_function.R")
+sim1 = simulation_3(data_divide = rep("1/2/3/4",3),sigma = c(5,20,100))
+mds_list = lapply(sim1[1:3], function(x){
+  dist = dist2(x,x)
+  mds = cmdscale(dist,2)
+  return(mds)
+})
+g_sim1 = as_tibble(list.rbind(mds_list)) %>% 
+  mutate(data_type = rep(c(1,2,3), each = 200),
+         true = rep(sim1$truelabel, 3)) %>% 
+  ggplot(aes(x = V1, y = V2, color = factor(true)))+
+  geom_point()+
+  facet_grid(data_type~., scale = "free")
+
+g_sim1
 ```
 
-## information for simulation setting
+Note that in this setting, the distance between 4 clusters are different. Denoting distance between cluster 1 and 2 as $d_{12}'$, then we have $d_{12}'=d_{13}' = d_{24}'<d_{14}' = d_{23}'<d_{34}'$
 
-when we setting the division as 1/23 for data1, 12/3 for data2, there is a repeat in info
+2) different types of data imply different cluster information
 
-But when we set 1/2 for data1, 2/3 for data2, then there is no repeat info?
+As mentioned above, in this setting, we assume 3 data types can separate 4 different subtypes, but different data types imply different clustering info. 3 data types separate AB/CD, AC/BD, AD/BC separately, with equall $(-\mu_1,\mu_1)$ as mean of distribution uniformly. 
+
+Note that this is a completely balanced situation where all 4 subtypes are equally distant to each other.
+
 
 ```{r}
-# TODO
+source("./code/functions/simulation_function.R")
+sim2 = simulation_3(data_divide = c("12/34", "13/24","14/23"))
+mds_list2 = lapply(sim2[1:3], function(x){
+  dist = dist2(x,x)
+  mds = cmdscale(dist,2)
+  return(mds)
+})
+g_sim2= as_tibble(list.rbind(mds_list2)) %>% 
+  mutate(data_type = rep(c(1,2,3), each = 200),
+         true = rep(sim1$truelabel, 3)) %>% 
+  ggplot(aes(x = V1, y = V2, color = factor(true)))+
+  geom_point()+
+  facet_grid(data_type~., scale = "free")
+
+g_sim2
 ```
+
 
 
 
 # the weight optimization
 
 ## intro the question 
+
 From 50 running, we see that the mean weight for all 3 data types are balanced, but when looking at one-time output, there is always a dominant data, while the others contribute trivial. We need to figure out why this is the case.
+
 ```{r}
 # table_balance = NULL
 # for(i in 1:10){
@@ -194,130 +133,10 @@ From the derivation, we can see that the weight for a certain kernel depends on 
 * the sum of multiplication of distance and similarity matrix
 * the hyperparameter $\rho$
 
-### Data simulation
-```{r}
-set.seed(234)
-## get 2 balanced data type
-library(tidyverse)
-source("./code/functions/simulation_function.R")
-set.seed(111)
-sim = simulation_2(size = 150, sub_ratio = rep(1/3,3), eff_size = c(5,5), sigma = c(50,50),data_divide = c("1/23","12/3"),dist = c("normal","normal"))
-
-## see the distribution of 2 data types
-par(mfrow = c(2,1))
-plot(1:150, rowMeans(sim$data1[,1:50]),main = "data1")
-plot(1:150, rowMeans(sim$data2[,1:50]),main = "data2")
-```
-
-### Verification of multiplication sum
-
-```{r}
-## calculate the multiple distance_kernels for both data type
-## input n*p
-
-source("./code/R/compute.multiple.kernel.R")
-source("./code/functions/SIMLR_multi.R")
-library("parallel")
-library(Matrix)
-mk1 = multiple.kernel(sim$data1,cores.ratio = 0.5)
-mk2 = multiple.kernel(sim$data2,cores.ratio = 0.5)
-D_kernels = list()
-for(i in 1:110){
-  if(i<=55){
-    D_kernels[[i]] = mk1[[i]]
-  }else if (i<=110){
-    D_kernels[[i]] = mk2[[i-55]]
-  }
-}
-
-## calculate the simlr_multi without SNF
-sim_res = SIMLR_multi(D_Kernels = D_kernels, c = 3)
-s_res = sim_res$S
-## the first 55 weights
-sum(sim_res$alphaK[1:55])
-```
-
-
-```{r,eval=F}
-# ## calculate the SIMLR with SNF_initial
-# 
-# w1 = affinityMatrix(dist2_w(as.matrix(sim$data1),as.matrix(sim$data1), weight = sim$weight1))
-# w2 = affinityMatrix(dist2_w(as.matrix(sim$data2),as.matrix(sim$data2), weight = sim$weight2))
-# 
-# W = SNF(list(w1,w2))
-# sim_SNF_res = SIMLR_multi_SNF(D_Kernels = D_kernels,SNF_init = W,c = 3,cores.ratio = 0.5)
-# sum(sim_SNF_res$alphaK[1:55])
-# source("./code/functions/simulation_verify.R")
-# source("./code/functions/SIMLR_multi.R")
-# eva = simulation_verify_2data(3,sim,truelabel = sim$truelabel)
-```
-
-
-```{r}
-multiplication_sum = NULL
-for(i in 1:110){
-  multiplication_sum = c(multiplication_sum,sum(as.matrix(D_kernels[[i]])*s_res))
-}
-## see the relationship btw multi_sum and weight
-par(mfrow = c(2,1))
-plot(1:110,multiplication_sum)
-plot(1:110, sim_res$alphaK)
-par(mfrow = c(1,1))
-plot(multiplication_sum, sim_res$alphaK)
-
-## only focus on the 11 significantly contributed kernels
-par(mfrow = c(2,1))
-plot(seq(1,110,by = 5),multiplication_sum[seq(1,110,by = 5)],xaxt = "n")
-axis(1, at = seq(1,110,by = 5),las = 2)
-plot(seq(1,110,by = 5), sim_res$alphaK[seq(1,110,by = 5)],xaxt = "n")
-axis(1, at = seq(1,110,by = 5),las = 2)
-
-## the order of distance and the order of weights
-order_ms = sort(multiplication_sum,index.return = T)$ix
-order_weight = sort(sim_res$alphaK,decreasing = T, index.return = T)$ix
-par(mfrow = c(1,1))
-plot(order_ms, order_weight)
-abline(a = 1, b = 1)
-```
 
 ### the influence of rho
 
-Now we change $\rho$ to see the influence
-
-First, change the fucntion of umkl to make u as a changable parameter
-
-```{r,echo = F}
-source("./code/functions/Changing_rho.R")
-```
-
-```{r}
-# fit the SIMLR for when u = 50
-sim_res_50u = SIMLR_multi_u(D_Kernels = D_kernels, c = 3, u = 50)
-s_50 = sim_res_50u$S
-sum(sim_res_50u$alphaK[1:55])
-# show the difference of weights when using different weight
-multiplication_sum_u50 = NULL
-for(i in 1:110){
-  multiplication_sum_u50 = c(multiplication_sum_u50,sum(as.matrix(D_kernels[[i]]) * s_50))
-}
-
-par(mfrow = c(2,2))
-## when u is 20
-plot(multiplication_sum[1:55], sim_res$alphaK[1:55],main = "u = 20")
-plot(multiplication_sum[56:110], sim_res$alphaK[56:110],main = "u = 20")
-## when u is 50
-plot(multiplication_sum_u50[1:55], sim_res_50u$alphaK[1:55],main = "u = 50")
-plot(multiplication_sum_u50[56:110], sim_res_50u$alphaK[56:110],main = "u = 50")
-```
-
-From the plot, we can see that when u increases, weights are more balanced.
-```{r}
-# See the influence to the results for different weight
-compare(sim_res$y$cluster, sim$truelabel,method = "nmi")
-compare(sim_res_50u$y$cluster, sim$truelabel,method = "nmi")
-```
-From this single running, we can see the large U will increase the performance of SIMLR
-Also, I run the simulation multiple times for different scenario to see the effect of U
+Simulation of different scenario to see the effect of U
 
 Scenario:
 * eff_size: c(5,5),c(3,7)
@@ -327,7 +146,7 @@ Under every scenario, we test U = c(20,30,40,50) separately
 
 We will focus
 * the sum of weight for first data type 
-* the final preformance.
+* the final performance.
 
 ```{r}
 files = list.files("./data/simulation_rho/")
@@ -343,7 +162,17 @@ table_rho_mean = table_rho %>%
   mutate(nmi_improve = nmi_SIMLR-nmi_SNF) %>% 
   arrange(desc(nmi_improve))
 
-View(table_rho_mean)
+table_rho_mean%>% 
+  separate(scenario, into = c("sub_eff","U"), sep = "_(?=[^_]+$)") %>%
+  pivot_longer(
+    nmi_SNF:nmi_SIMLR,
+    names_to = "methods",
+    values_to = "value"
+  ) %>% 
+  ggplot(aes(x = U,y = value,color = methods)) +
+  geom_boxplot()+
+  facet_grid(sub_eff~.)
+
 ## show the weight change among U
 table_rho %>% 
   separate(scenario, into = c("sub_eff","U"), sep = "_(?=[^_]+$)") %>%
@@ -354,20 +183,10 @@ table_rho %>%
 
 From the simulation, we can see, when the variance is not extremely large, the performance of SIMLR will be relative stable. Only by changing weight, the performance of SIMLR can't show greater improve than SNF
 
-## The influence of weight 
+Here, we can see the parameter $\rho$ (Or in this algorithm U) has a dominant role to control the variation of weights between kernels and data types. In this algorithm, the U is set to be 20 for all situation, which may not be proper for all situation. 
 
-Here we see weight is depend on both the multiplication sum and the hyper-parameter $\rho$, but we still don't know:
-
-* how weight make difference to the final SIMLR results? 
-* Is it meaningful to upweight the data with weaker signal?
-
-### How would weight-changing influence the final performance?
-
-#### Data simulation with different signal strength
-
-Here we are focusing on the weak signals' performnce, so we choose simulation data with distinguish signal strength.
-
-We use the effective size to divide the signals strength, but sub_ratio division will be shown in simulaion
+## Effect of SIMLR 
+-- see the change of integrated similarity matrix
 
 ```{r}
 ## Data simulation
@@ -382,9 +201,6 @@ points(1:150, rowMeans(sim_eff37$data1[,1:50]))
 ```
 
 
-#### Weight fixed SIMLR
-
-Here we fit SIMLR separately for 2 data and get the kernels weight separatey
 
 ```{r}
 ## normalize data
@@ -409,78 +225,14 @@ for(i in 1:110){
     D_kernels[[i]] = mk2[[i-55]]
   }
 }
-
-## change weight of 2 datas to see the performance
-source("./code/functions/SIMLR_no_weights.R")
-w_data = mapply(c, seq(0.1,0.9,by = 0.2), seq(0.9,0.1, by = -0.2),SIMPLIFY = F)
-nmi_fixed = NULL
-S_list = list()
-cluster_list = list()
-for(i in 1:length(w_data)){
-  res_f = SIMLR_multi_fix_weight(D_Kernels = D_kernels,c = 3, weight_list = weight_list, w_data = w_data[[i]])
-  S_list[[i]] = res_f$S
-  cluster_list[[i]] = res_f$y$cluster
-  nmi_fixed = c(nmi_fixed, compare(res_f$y$cluster, truelabel, method = "nmi"))
-}
-
-plot(seq(0.1,0.9,by = 0.2),nmi_fixed, xlab = "data1_weight")
-lines(seq(0.1,0.9,by = 0.2),nmi_fixed)
-nmi_fixed
-
-## compare SIMLR_multi
-sim_multi_res = SIMLR_multi(D_Kernels = D_kernels,c = 3)
-compare(sim_multi_res$y$cluster, truelabel,method = "nmi")
-
-## compare to SNF pwerformance
-af1 = affinityMatrix(dist2_w(as.matrix(data1),as.matrix(data1), weight = sim_eff37$weight1))
-af2 = affinityMatrix(dist2_w(as.matrix(data2),as.matrix(data2), weight = sim_eff37$weight2))
-W = SNF(list(af1,af2))
-cluster_SNF = spectralClustering(W,3)
-
-compare(cluster_SNF, truelabel,method = "nmi")
 ```
 
-From above analysis, we can first see that fix weight for data separately will decrease the performance, and changing weight has no specific influence to the final performance unless the important signal is being down weighted too much 
-
-```{r}
-files = list.files("./data/simulation_fixWeight/")
-file_nmi = files[str_detect(files,"nmi")]
-table_fix = NULL
-for(i in 1:length(file_nmi)){
-  table_cur = readRDS(paste("./data/simulation_fixWeight/",file_nmi[i],sep = ""))
-  table_fix = rbind(table_fix,table_cur)
-}
-
-table_fix_mean = table_fix %>% 
-  group_by(scenario) %>% 
-  summarise_all(mean)
-View(table_fix_mean)
-
-```
 
  
-### Show SNF after similar
-```{r}
-W = SNF(list(res1$S,res2$S))
-compare(spectralClustering(W,3), sim$truelabel,method = "nmi")
-```
 
 ### What is the difference btw initial S_0 and S after SIMLR optimization?
 
-```{r, include = FALSE}
-# Here we show the difference btw the multiplication sum of 2 datas
-# In order to see the effect of SIMLR algorithm, we compare:
-# 
-# * the initial $S_0$ where we use the inverse of the averaged distance
-# 
-# $$ S_0 = \max(\bar D)-\bar D$$
-# 
-# * the similarity matrix output after SIMLR optimization
-## before any similarity multiplication, we can see the distance between 2 data 
-multi_diff = NULL
-for(i in 1:55){
-  multi_diff = c(multi_diff, sum(as.matrix(D_kernels[[i]]))-sum(as.matrix(D_kernels[[i+55]])))
-}
+```{r}
 
 ## we fisrt see the effect of averaged S_ij
 ### calculate the initial averaged S_ij
@@ -490,43 +242,23 @@ for(i in 1:length(D_kernels)){
 }
 s0 =  sum_kernels/length(D_kernels)
 s0 = max(s0) - s0
+cluster_s0 = spectralClustering(s0,3)
+heatmap(s0, Rowv = NA, Colv = NA, scale = "column")
 
-### calculate multiplication difference btw 2 data
-### we are using the same 55 kernel caculation methods for 2 data, Thus we compare (i,i+55)
-
-multi_diff_s0 = NULL
-for (i in 1:55){
-  multi_diff_s0 = c(multi_diff_s0, sum(D_kernels[[i]]%*%s0) - sum(D_kernels[[i+55]]%*%s0))
-  }
 
 ## Now we see the similarity matrix resulting from SIMLR
 source("./code/functions/SIMLR_multi.R")
-# sim_res = SIMLR_multi(D_Kernels = D_kernels, c = 3)
+sim_res = SIMLR_multi(D_Kernels = D_kernels, c = 3)
 s_res = sim_res$S
-multi_diff_sim = NULL
-for (i in 1:55){
-  multi_diff_sim = c(multi_diff_sim, sum(D_kernels[[i]]%*%s_res) - sum(D_kernels[[i+55]]%*%s_res))
-}
-
-par(mfrow=c(1,1))
-plot(1:55, multi_diff,ylim = c(-1e-6,0))
-par(new = T)
-points(1:55, multi_diff_s0, pch = 3)
-par(new = T)
-points(1:55, multi_diff_sim,pch = 2)
-
-
+heatmap(s_res, Rowv = NA, Colv = NA, scale = "column")
+compare(sim_res$y$cluster,rep(c(1,2,3), each = 50), method = "nmi")
+compare(cluster_s0,rep(c(1,2,3), each = 50), method = "nmi")
 
 ```
 
 As shown here, the multiplication sum has trivial difference for the initial $S_0$, but after the optimization by SIMLR, the difference btw 2 multiplication_sum become larger.
 
 *Is this right? What is the role of S here? should the data be far away?*
-
-
-
-
-
 
 
 
@@ -545,11 +277,6 @@ library(tidyverse)
 source("./code/functions/simulation_function.R")
 set.seed(111)
 sim = simulation_2(size = 150, sub_ratio = rep(1/3,3), eff_size = c(5,5), sigma = c(100,100),data_divide = c("1/23","12/3"),dist = c("normal","normal"))
-
-## see the distribution of 2 data types
-par(mfrow = c(2,1))
-plot(1:150, rowMeans(sim$data1[,1:50]),main = "data1")
-plot(1:150, rowMeans(sim$data2[,1:50]),main = "data2")
 ```
 
 ```{r,,eval = F}
@@ -568,6 +295,8 @@ plot(density(diag(dist_s)))
 dissim = (1:150)[diag(dist_s) > quantile(diag(dist_s))[4]]
 
 ```
+
+
 
 ## Possible solutions
 
@@ -615,6 +344,7 @@ plot(1:150^2,res2$S)
 ## first calculate the weighted distance
 mk1 = multiple.kernel(sim$data1,cores.ratio = 0.5)
 mk2 = multiple.kernel(sim$data2,cores.ratio = 0.5)
+
 opt_dist1 = matrix(0,150,150)
 for(i in 1:55){
   opt_dist1 = opt_dist1 + res1$alphaK[i]*mk1[[i]]
@@ -659,15 +389,9 @@ New term in the objective function:
 $$\min_{w} \sum_{i,j,t,l}w_{tl}D_{l,i,j}S_{ij}I\{sub_{ij}\in C_t\}$$
 t is for different cluster  
 
-# The influence of variance
 
-From the above 3_data_3_group table, the SIMLR performance show a severe reduction. For I always using the distribution with small variance, which both methods are having a better performance.  
 
-*See the simulation result with changing variance, where the variance is changing with the effective size*
 
-# The influence of normalize
-
-## the multiple relation btw mean and variance 
 
 
 
