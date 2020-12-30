@@ -450,6 +450,40 @@ weight_glno+weight_gl
 ```
 
 
+```{r}
+weight_2methods_2 = as_tibble(gl_weight) %>% 
+  separate(scenario,into = c("ratio","eff","sigma","div"), sep = "_") %>%
+  filter(ratio == "sub1111"&div == "div2") %>%
+  dplyr::select(eff,sigma,type,gl = GL2, gl_nogl = GL2_nogl) %>% 
+  pivot_longer(
+    gl:gl_nogl,
+    names_to = "methods",
+    values_to = "weights"
+  ) %>% 
+  ggplot(aes(x = factor(type), y = weights, color = methods))+
+  geom_boxplot()+
+  facet_grid(eff~sigma)
+
+weight_gl_2 = as_tibble(gl_weight) %>% 
+  separate(scenario,into = c("ratio","eff","sigma","div"), sep = "_") %>%
+  filter(ratio == "sub1111"&div == "div2") %>%
+  dplyr::select(eff,sigma,type,weights = GL2) %>% 
+  ggplot(aes(x = factor(type), y = weights))+
+  geom_boxplot(color = "red")+
+  facet_grid(eff~sigma)+
+  ggtitle("gl_weights")
+
+weight_glno_2 = as_tibble(gl_weight) %>% 
+  separate(scenario,into = c("ratio","eff","sigma","div"), sep = "_") %>%
+  filter(ratio == "sub1111"&div == "div2") %>%
+  dplyr::select(eff,sigma,type,weights = GL2_nogl) %>% 
+  ggplot(aes(x = factor(type), y = weights))+
+  geom_boxplot(color = "blue")+
+  facet_grid(eff~sigma)+
+  ggtitle("gl_nogl_weights")
+  
+weight_glno_2+weight_gl_2
+```
 
 
 
