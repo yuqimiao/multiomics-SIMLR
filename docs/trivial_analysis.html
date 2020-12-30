@@ -13,7 +13,7 @@
 
 <meta name="date" content="2020-09-08" />
 
-<title>trivial_analysis</title>
+<title>Problem Intro and simulation setting</title>
 
 <script src="site_libs/header-attrs-2.1/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
@@ -389,7 +389,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">trivial_analysis</h1>
+<h1 class="title toc-ignore">Problem Intro and simulation setting</h1>
 <h4 class="author">yuqimiao</h4>
 <h4 class="date">2020-09-08</h4>
 
@@ -416,7 +416,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-09-23
+<strong>Last updated:</strong> 2020-12-29
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -507,16 +507,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyuqimiaomultiomicsSIMLRtree449a753080d36403e17e8be8a82a87c9df19282atargetblank449a753a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yuqimiao/multiomics-SIMLR/tree/449a753080d36403e17e8be8a82a87c9df19282a" target="_blank">449a753</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyuqimiaomultiomicsSIMLRtree7bea59cb6b646423ca74cbbc15f790406972a14etargetblank7bea59ca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yuqimiao/multiomics-SIMLR/tree/7bea59cb6b646423ca74cbbc15f790406972a14e" target="_blank">7bea59c</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomyuqimiaomultiomicsSIMLRtree449a753080d36403e17e8be8a82a87c9df19282atargetblank449a753a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomyuqimiaomultiomicsSIMLRtree7bea59cb6b646423ca74cbbc15f790406972a14etargetblank7bea59ca" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/yuqimiao/multiomics-SIMLR/tree/449a753080d36403e17e8be8a82a87c9df19282a" target="_blank">449a753</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/yuqimiao/multiomics-SIMLR/tree/7bea59cb6b646423ca74cbbc15f790406972a14e" target="_blank">7bea59c</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -530,29 +530,65 @@ Ignored files:
     Ignored:    code/.DS_Store
     Ignored:    code/R/.DS_Store
     Ignored:    code/functions/.DS_Store
+    Ignored:    code/functions/.Rhistory
     Ignored:    data/.DS_Store
 
 Untracked files:
     Untracked:  SIMLR-tracking.md
     Untracked:  analysis/derivation_of_weights.jpeg
+    Untracked:  analysis/gl_simlr_micro.Rmd
+    Untracked:  code/MKerW-A/
     Untracked:  code/bck_scripts/
     Untracked:  code/cluster_functions/
     Untracked:  code/functions/Changing_rho.R
+    Untracked:  code/functions/Code_5term_opt-copy.R
+    Untracked:  code/functions/Code_5term_opt.R
     Untracked:  code/functions/SIMLR_no_weights.R
+    Untracked:  code/functions/dist_kernels.R
+    Untracked:  code/functions/gl_simlr.R
+    Untracked:  code/functions/gl_simlr2.0.R
+    Untracked:  code/functions/kernel_validation.R
+    Untracked:  code/functions/microb_compare.R
+    Untracked:  code/functions/simulation_function1.0.R
     Untracked:  code/functions/simulation_tidy.R
+    Untracked:  code/functions/tmp.R
+    Untracked:  code/microb_apply/
+    Untracked:  code/simulation_1224.R
+    Untracked:  code/simulation_1229.R
+    Untracked:  code/simulation_compare2.R
+    Untracked:  code/simulation_compare3.R
+    Untracked:  code/simulation_compare_size.R
     Untracked:  data/balance_24_table.Rdata
+    Untracked:  data/configuration_data_40.Rdata
     Untracked:  data/eff37_24_table.Rdata
     Untracked:  data/example_data/
+    Untracked:  data/micro_case_pool.Rdata
+    Untracked:  data/micro_case_pool_2.Rdata
+    Untracked:  data/simu_1215/
+    Untracked:  data/simu_1220/
+    Untracked:  data/simu_1229/
+    Untracked:  data/simu_all/
     Untracked:  data/simulation_2data/
     Untracked:  data/simulation_data_var10_s4/
     Untracked:  data/simulation_data_var20_s4/
-    Untracked:  data/simulation_fixWeight/
+    Untracked:  data/simulation_gl/
+    Untracked:  data/simulation_gl_1/
+    Untracked:  data/simulation_microgl/
+    Untracked:  data/simulation_microgl_1/
     Untracked:  data/simulation_normalization/
     Untracked:  data/simulation_rho/
     Untracked:  data/simulation_var10_50/
     Untracked:  data/simulation_var5_50/
     Untracked:  data/table_balance_3d3g.Rdata
+    Untracked:  gl-simlr_old_analysis.Rmd
+    Untracked:  micro_abd.Rdata
+    Untracked:  micro_abd_preabs.Rdata
+    Untracked:  micro_case_pool2.Rdata
+    Untracked:  microb_multisim.Rdata
+    Untracked:  new_micro.jpeg
+    Untracked:  parameter_separation/
     Untracked:  sub111_eff55_u20.rds
+    Untracked:  tsne/
 
 Unstaged changes:
     Deleted:    analysis/sim_report.rmd
@@ -600,6 +636,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yuqimiao/multiomics-SIMLR/blob/7bea59cb6b646423ca74cbbc15f790406972a14e/analysis/trivial_analysis.rmd" target="_blank">7bea59c</a>
+</td>
+<td>
+yuqimiao
+</td>
+<td>
+2020-12-29
+</td>
+<td>
+wflow_publish(files = c(“analysis/GL_SIMLR.rmd”, “analysis/trivial_analysis.rmd”))
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yuqimiao/multiomics-SIMLR/d459d2bc8716de73ed4ed2f24ef82198649140ca/docs/trivial_analysis.html" target="_blank">d459d2b</a>
+</td>
+<td>
+yuqimiao
+</td>
+<td>
+2020-09-23
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -692,100 +762,88 @@ simulation describe and basic operation for a data in trivial analysis
 </div>
 </div>
 </div>
-<div id="for-cluster-evaluation-index" class="section level1">
-<h1>For cluster evaluation index</h1>
-<pre class="r"><code>library(igraph)</code></pre>
-<pre><code>
-Attaching package: &#39;igraph&#39;</code></pre>
-<pre><code>The following objects are masked from &#39;package:stats&#39;:
-
-    decompose, spectrum</code></pre>
-<pre><code>The following object is masked from &#39;package:base&#39;:
-
-    union</code></pre>
-<pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>── Attaching packages ─────────────────────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
+<pre class="r"><code>library(SNFtool)
+library(rlist)
+library(tidyverse)</code></pre>
+<pre><code>── Attaching packages ────────────────────────────── tidyverse 1.3.0 ──</code></pre>
 <pre><code>✓ ggplot2 3.3.0     ✓ purrr   0.3.3
 ✓ tibble  3.0.0     ✓ dplyr   0.8.5
 ✓ tidyr   1.0.2     ✓ stringr 1.4.0
 ✓ readr   1.3.1     ✓ forcats 0.5.0</code></pre>
-<pre><code>── Conflicts ────────────────────────────────────────────────────────── tidyverse_conflicts() ──
-x dplyr::as_data_frame() masks tibble::as_data_frame(), igraph::as_data_frame()
-x purrr::compose()       masks igraph::compose()
-x tidyr::crossing()      masks igraph::crossing()
-x dplyr::filter()        masks stats::filter()
-x dplyr::groups()        masks igraph::groups()
-x dplyr::lag()           masks stats::lag()
-x purrr::simplify()      masks igraph::simplify()</code></pre>
-<pre class="r"><code>compare(rep(1:3,times = c(15,15,120)),rep(1:2, times = c(30,120)),method = &quot;nmi&quot;)</code></pre>
-<pre><code>[1] 0.8783349</code></pre>
-<pre class="r"><code>compare(rep(1:3,times = c(15,15,120)),rep(1:2, times = c(30,120)),method = &quot;rand&quot;)</code></pre>
-<pre><code>[1] 0.9798658</code></pre>
-<p>It can be seen that, using the rand and nmi as evaluation criterion, although A/B can’t be divide, the index is also very high</p>
+<pre><code>── Conflicts ───────────────────────────────── tidyverse_conflicts() ──
+x dplyr::filter() masks stats::filter()
+x dplyr::lag()    masks stats::lag()</code></pre>
+<pre class="r"><code>library(abSNF)</code></pre>
+<pre><code>
+Attaching package: &#39;abSNF&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:SNFtool&#39;:
+
+    affinityMatrix, dist2, SNF, spectralClustering,
+    standardNormalization</code></pre>
+<pre class="r"><code>library(SIMLR)
+library(parallel)
+library(Matrix)</code></pre>
+<pre><code>
+Attaching package: &#39;Matrix&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:tidyr&#39;:
+
+    expand, pack, unpack</code></pre>
+<pre class="r"><code>source(&quot;./code/R/compute.multiple.kernel.R&quot;)
+source(&quot;./code/functions/simulation_function.R&quot;)</code></pre>
+<div id="goal-of-study" class="section level1">
+<h1>Goal of study</h1>
+<p>We want to find a data integration method which can accurately identify the subtypes embeded in multi-omics data of patients.</p>
+<div id="problems-want-to-solve-in-this-method" class="section level2">
+<h2>Problems want to solve in this method</h2>
+<ol style="list-style-type: decimal">
+<li>Find the structure of different omics data, and compare similarity/difference;</li>
+<li>Integrate complementary information from multi-omics data to capture as much as subtype information as possible;</li>
+<li>Avoid influence from noise features.</li>
+</ol>
+</div>
 </div>
 <div id="simulation-logic" class="section level1">
 <h1>simulation logic</h1>
+<div id="mechanism-and-characteristics-parameters" class="section level2">
+<h2>Mechanism and characteristics parameters</h2>
+<p>The goal of simulation is to embed differences in the signal features of different subtypes. Although for the same set of samples, they could imply different cluster information, and the difference can be shown from the effective size, the noise-to-signal ratio, the cluster type seperation and the feature distribution type.</p>
+<p>Here we have 2 different settings to imply 2 scenarios:</p>
+<p>Assuming 200 samples in 4 different subtypes, overall 4 data types. Every data type has 1000 features, with different noise-signal ratio and feature variance. The signal features are coming from different distributions with different parameters for different subtypes, which is the mechanism to generate subtype difference.</p>
+<p>More specifically, let’s assume the first data type (n = 200 * p = 1000) can separate 4 subtypes with balanced subtype ratio(50 subjects per subtype). The first 50 features are the signals which actually effective in subtype separation. For the first subtype, the 50 feature signal are generated from <span class="math inline">\(N(\mu_1, \sigma^2)\)</span>, the second subtype, <span class="math inline">\(N(\mu_2, \sigma^2)\)</span> and so on, thus, the difference between <span class="math inline">\(\mu_i\)</span> and the size of <span class="math inline">\(\sigma\)</span> will influence the degree of separation of 4 subtypes. Also, not all features would follow a normal distribution. For example, beta measurement of methylation rates for a CpG sites could follow a beta distrbution.</p>
+</div>
+<div id="new-information-possession-setting" class="section level2">
+<h2>[NEW] Information possession setting</h2>
+<p>Besides the subtype ratio, <span class="math inline">\(\mu_i\)</span> and <span class="math inline">\(\sigma\)</span> and distribution type, there is another factor could influence the result of integration. Different data types could include different separation information. For example, subtype A and B have analygous gene expression profile, and subtype C and D also have analygous gene expression profile, but the subtype combinations A&amp;B and C&amp;D may have different gene expression profile. In this setting, using gene expression data only, we can separate A&amp;B and C&amp;D as 2 subtypes. Similarly, methylation data can separate A&amp;C and B&amp;D as 2 subtypes. In this setting, if we can properly integrate these 2 data types, we can have 4 subtype groups.But there are many possibilities for the information possession setting for each data type. Here we only consider 2 easy scenario.</p>
 <ol style="list-style-type: decimal">
-<li>here we are assuming every data can only provide 1 division, which means for a type of data, we can only cluster to 2 subtypes;</li>
-<li>For this simulation setting, we can also expand our subtype number to 5 or 6, which can be divided by:</li>
+<li>different types of data imply same cluster information</li>
 </ol>
-<p>for 5 * “12/345” * “13/245” * “14/235”</p>
-<p>for 6 * 123/456 * 145/236 * 124/356</p>
-<p>(use plot to show the division)</p>
-<p>we can directly change the sub_ratio, data_division to get 5 or 6 subtype</p>
-<pre class="r"><code># try using 4 groups divided by 3 types of data
+<p>Here we assume all data types reflect same clustering information, which means all data types can separate 4 different subtypes with similar clustering analogy. We can assume for data type m, the signal features for 4 subtypes comes from <span class="math inline">\(N(\mu_{im}, \sigma^2), i = 1,2,3,4\)</span> separately. We set the parameter: <span class="math inline">\(\{\mu_{im}\} = \{-\mu_m,\mu_m,-2\mu_m,2\mu_m\}\)</span></p>
+<pre class="r"><code>source(&quot;./code/functions/simulation_function.R&quot;)
+sim1 = simulation_3(data_divide = rep(&quot;1/2/3/4&quot;,3),sigma = c(5,20,100))
+mds_list = lapply(sim1[1:3], function(x){
+  dist = dist2(x,x)
+  mds = cmdscale(dist,2)
+  return(mds)
+})</code></pre>
+<pre><code>Warning in if (is.na(c)) {: the condition has length &gt; 1 and only the first
+element will be used
 
-## input
-size = 240
-sub_ratio = c(rep(0.2,4),rep(0.1,2))
-eff_size = rep(5,3)
-sigma = 10
-data_divide =&quot;123/456&quot;
-dist = &quot;normal&quot;
+Warning in if (is.na(c)) {: the condition has length &gt; 1 and only the first
+element will be used
 
-## calculate index_cut for given subtype ratio
-index_cut = cumsum(sub_ratio)*size
-index = list()
-for(i in 1:length(index_cut)){
-  if(i == 1){
-    index[[i]] = 1:index_cut[1]
-  }else{
-    index[[i]] = (index_cut[[i-1]]+1):index_cut[[i]]
-  }
-}
-
-### for a data
-data1 = matrix(0,size, 1000)
-divide = lapply(X = str_split(str_split(data_divide,pattern = &quot;/&quot;)[[1]], pattern = &quot;&quot;), 
-                FUN = as.numeric
-                )
-ind1 = NULL
-for(i in 1:length(divide[[1]])){
-  ind1 = c(ind1, index[[divide[[1]][i]]])
-}
-ind2 = NULL
-for(i in 1:length(divide[[2]])){
-  ind2 = c(ind2, index[[divide[[2]][i]]])
-}
-if (dist == &quot;normal&quot;){
-  data1[ind1,1:50] = rnorm(length(ind1)*50, eff_size[1], sqrt(sigma))
-  data1[ind2,1:50] = rnorm(length(ind2)*50, -eff_size[1], sqrt(sigma))
-}else if(dist == &quot;logit&quot;){
-  data1[ind1,1:50] = sapply(X = rnorm(length(ind1)*50, eff_size[1], sqrt(sigma)),
-                            FUN = function(x) exp(x)/(1+exp(x))
-                            )
-  data1[ind2,1:50] = sapply(X = rnorm(length(ind2)*50, -eff_size[1], sqrt(sigma)),
-                            FUN = function(x) exp(x)/(1+exp(x))
-                            )
-}
-
-truelabel = NULL
-  for (i in 1:length(index)){
-    truelabel = c(truelabel, rep(i,length(index[[i]])))
-  }
-par(mfrow = c(2,1))
-hist(data1[1:144,1:50], main = &quot;the first 3 subtype&quot;)
-hist(data1[145:200,1:50], main = &quot; the latter 3 subtype&quot;)</code></pre>
+Warning in if (is.na(c)) {: the condition has length &gt; 1 and only the first
+element will be used</code></pre>
+<pre class="r"><code>g_sim1 = as_tibble(list.rbind(mds_list)) %&gt;% 
+  mutate(data_type = rep(c(1,2,3), each = 200),
+         true = rep(sim1$truelabel, 3)) %&gt;% 
+  ggplot(aes(x = V1, y = V2, color = factor(true)))+
+  geom_point()+
+  facet_grid(data_type~., scale = &quot;free&quot;)</code></pre>
+<pre><code>Warning: The `x` argument of `as_tibble.matrix()` must have column names if `.name_repair` is omitted as of tibble 2.0.0.
+Using compatibility `.name_repair`.
+This warning is displayed once every 8 hours.
+Call `lifecycle::last_warnings()` to see where this warning was generated.</code></pre>
+<pre class="r"><code>g_sim1</code></pre>
 <p><img src="figure/trivial_analysis.rmd/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-2-1">
@@ -835,23 +893,35 @@ yuqimiao
 </table>
 </div>
 </div>
-<ol start="3" style="list-style-type: decimal">
-<li>For weight construction</li>
+<p>Note that in this setting, the distance between 4 clusters are different. Denoting distance between cluster 1 and 2 as <span class="math inline">\(d_{12}&#39;\)</span>, then we have <span class="math inline">\(d_{12}&#39;=d_{13}&#39; = d_{24}&#39;&lt;d_{14}&#39; = d_{23}&#39;&lt;d_{34}&#39;\)</span></p>
+<ol start="2" style="list-style-type: decimal">
+<li>different types of data imply different cluster information</li>
 </ol>
-<p>Using the best performance setting for abSNF( from peifeng’s paper)</p>
-<pre class="r"><code>n1 = 50*0.6#n1 is # of correct weights for informative features
-n2 = 950*0.8#n2 is # of correct weights for non-informative features
-r1 = 1
-r2 = 3
-uninfo_r1 = 0
-uninfo_r2 = 1
-#r1, r2, uninfo_r1, uninfo_r2 define the magnitude of correct wights 
-ge_weight=abs(runif(1000,0,1))
-s=sample(1:50,n1)
-ge_weight[s]=runif(n1,r1,r2)
-ss=sample(51:1000,n2)
-ge_weight[ss]=runif(n2,uninfo_r1,uninfo_r2)
-plot(1:1000, ge_weight)</code></pre>
+<p>As mentioned above, in this setting, we assume 3 data types can separate 4 different subtypes, but different data types imply different clustering info. 3 data types separate AB/CD, AC/BD, AD/BC separately, with equall <span class="math inline">\((-\mu_1,\mu_1)\)</span> as mean of distribution uniformly.</p>
+<p>Note that this is a completely balanced situation where all 4 subtypes are equally distant to each other.</p>
+<pre class="r"><code>source(&quot;./code/functions/simulation_function.R&quot;)
+sim2 = simulation_3(data_divide = c(&quot;12/34&quot;, &quot;13/24&quot;,&quot;14/23&quot;))
+mds_list2 = lapply(sim2[1:3], function(x){
+  dist = dist2(x,x)
+  mds = cmdscale(dist,2)
+  return(mds)
+})</code></pre>
+<pre><code>Warning in if (is.na(c)) {: the condition has length &gt; 1 and only the first
+element will be used
+
+Warning in if (is.na(c)) {: the condition has length &gt; 1 and only the first
+element will be used
+
+Warning in if (is.na(c)) {: the condition has length &gt; 1 and only the first
+element will be used</code></pre>
+<pre class="r"><code>g_sim2= as_tibble(list.rbind(mds_list2)) %&gt;% 
+  mutate(data_type = rep(c(1,2,3), each = 200),
+         true = rep(sim1$truelabel, 3)) %&gt;% 
+  ggplot(aes(x = V1, y = V2, color = factor(true)))+
+  geom_point()+
+  facet_grid(data_type~., scale = &quot;free&quot;)
+
+g_sim2</code></pre>
 <p><img src="figure/trivial_analysis.rmd/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-1">
@@ -890,139 +960,6 @@ yuqimiao
 </table>
 </div>
 </div>
-<div id="steps-for-a-single-data" class="section level2">
-<h2>Steps for a single data:</h2>
-<p>From every data type, we want to get the result:</p>
-<ol style="list-style-type: decimal">
-<li>multiple kernels</li>
-<li>affinity matrix</li>
-<li>eigen gap result</li>
-<li>SIMLR result</li>
-</ol>
-<p>Firstly, for clarification, the affinity matrix gives the RBF kernels of the data, while the multiple kernel getting from SIMLR-multiple.kernel function gives the nomalized distance btw subjects, so we can’t just using the averaged multiple kernel to do the SNF</p>
-<pre class="r"><code># check affinity matrix and kernels
-library(abSNF)</code></pre>
-<pre><code>
-Attaching package: &#39;abSNF&#39;</code></pre>
-<pre><code>The following object is masked _by_ &#39;.GlobalEnv&#39;:
-
-    data1</code></pre>
-<pre class="r"><code>library(SIMLR)
-library(SNFtool)</code></pre>
-<pre><code>
-Attaching package: &#39;SNFtool&#39;</code></pre>
-<pre><code>The following objects are masked from &#39;package:abSNF&#39;:
-
-    affinityMatrix, dist2, SNF, spectralClustering,
-    standardNormalization</code></pre>
-<pre class="r"><code>library(parallel)
-library(Matrix)</code></pre>
-<pre><code>
-Attaching package: &#39;Matrix&#39;</code></pre>
-<pre><code>The following objects are masked from &#39;package:tidyr&#39;:
-
-    expand, pack, unpack</code></pre>
-<pre class="r"><code>source(&quot;./code/R/compute.multiple.kernel.R&quot;)
-data1 = standardNormalization(data1)
-mk1 = multiple.kernel(data1)
-af1 = affinityMatrix(dist2_w(as.matrix(data1),as.matrix(data1), weight = ge_weight))
-par(mfrow = c(2,1))
-displayClusters(af1, truelabel)
-displayClusters(as.matrix(mk1[[1]]), truelabel)</code></pre>
-<p><img src="figure/trivial_analysis.rmd/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-1">
-Past versions of unnamed-chunk-4-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-4-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/yuqimiao/multiomics-SIMLR/blob/a03de3916debe2eed33606afd828bfe072a267f6/docs/figure/trivial_analysis.rmd/unnamed-chunk-4-1.png" target="_blank">a03de39</a>
-</td>
-<td>
-yuqimiao
-</td>
-<td>
-2020-09-09
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div id="gap-and-simlr-results" class="section level2">
-<h2>gap and SIMLR results</h2>
-<pre class="r"><code>K = 2
-cores.ratio = 0.5
-gap1 = estimateNumberOfClustersGivenGraph(af1,2:5)$`Eigen-gap best`
-simlr1 = SIMLR(t(data1), K,cores.ratio = cores.ratio)</code></pre>
-<pre><code>Computing the multiple Kernels.
-Performing network diffiusion.
-Iteration:  1 
-Iteration:  2 
-Iteration:  3 
-Iteration:  4 
-Iteration:  5 
-Iteration:  6 
-Iteration:  7 
-Iteration:  8 
-Iteration:  9 
-Iteration:  10 </code></pre>
-<pre><code>Warning in SIMLR(t(data1), K, cores.ratio = cores.ratio): Maybe you should set a
-larger value of c.</code></pre>
-<pre><code>Performing t-SNE.
-Epoch: Iteration # 100  error is:  0.1822132 
-Epoch: Iteration # 200  error is:  0.1818182 
-Epoch: Iteration # 300  error is:  0.1815448 
-Epoch: Iteration # 400  error is:  0.1813413 
-Epoch: Iteration # 500  error is:  0.1811851 
-Epoch: Iteration # 600  error is:  0.1810577 
-Epoch: Iteration # 700  error is:  0.1809502 
-Epoch: Iteration # 800  error is:  0.1808586 
-Epoch: Iteration # 900  error is:  0.1807793 
-Epoch: Iteration # 1000  error is:  0.1807122 
-Performing Kmeans.
-Performing t-SNE.
-Epoch: Iteration # 100  error is:  9.090653 
-Epoch: Iteration # 200  error is:  0.1810468 
-Epoch: Iteration # 300  error is:  0.1804331 
-Epoch: Iteration # 400  error is:  0.180399 
-Epoch: Iteration # 500  error is:  0.1803674 
-Epoch: Iteration # 600  error is:  0.1803384 
-Epoch: Iteration # 700  error is:  0.1803136 
-Epoch: Iteration # 800  error is:  0.1802877 
-Epoch: Iteration # 900  error is:  0.1802636 
-Epoch: Iteration # 1000  error is:  0.1802408 </code></pre>
-<pre class="r"><code>nmi = compare(simlr1$y$cluster,truelabel, method = &quot;nmi&quot;)
-rand = compare(simlr1$y$cluster,truelabel, method = &quot;rand&quot;)
-nmi</code></pre>
-<pre><code>[1] 0.5559601</code></pre>
-<pre class="r"><code>rand</code></pre>
-<pre><code>[1] 0.6585774</code></pre>
-</div>
-<div id="information-for-simulation-setting" class="section level2">
-<h2>information for simulation setting</h2>
-<p>when we setting the division as 1/23 for data1, 12/3 for data2, there is a repeat in info</p>
-<p>But when we set 1/2 for data1, 2/3 for data2, then there is no repeat info?</p>
-<pre class="r"><code># TODO</code></pre>
 </div>
 </div>
 <div id="the-weight-optimization" class="section level1">
@@ -1083,201 +1020,12 @@ table_balance %&gt;% select(contains(&quot;weight&quot;) | contains(&quot;nmi&qu
 <li>the sum of multiplication of distance and similarity matrix</li>
 <li>the hyperparameter <span class="math inline">\(\rho\)</span></li>
 </ul>
-<div id="data-simulation" class="section level3">
-<h3>Data simulation</h3>
-<pre class="r"><code>set.seed(234)
-## get 2 balanced data type
-library(tidyverse)
-source(&quot;./code/functions/simulation_function.R&quot;)
-set.seed(111)
-sim = simulation_2(size = 150, sub_ratio = rep(1/3,3), eff_size = c(5,5), sigma = c(50,50),data_divide = c(&quot;1/23&quot;,&quot;12/3&quot;),dist = c(&quot;normal&quot;,&quot;normal&quot;))
-
-## see the distribution of 2 data types
-par(mfrow = c(2,1))
-plot(1:150, rowMeans(sim$data1[,1:50]),main = &quot;data1&quot;)
-plot(1:150, rowMeans(sim$data2[,1:50]),main = &quot;data2&quot;)</code></pre>
-<p><img src="figure/trivial_analysis.rmd/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
-</div>
-<div id="verification-of-multiplication-sum" class="section level3">
-<h3>Verification of multiplication sum</h3>
-<pre class="r"><code>## calculate the multiple distance_kernels for both data type
-## input n*p
-
-source(&quot;./code/R/compute.multiple.kernel.R&quot;)
-source(&quot;./code/functions/SIMLR_multi.R&quot;)</code></pre>
-<pre><code>
-Attaching package: &#39;gplots&#39;</code></pre>
-<pre><code>The following object is masked from &#39;package:stats&#39;:
-
-    lowess</code></pre>
-<pre><code>Loading required package: cluster</code></pre>
-<pre><code>
-Attaching package: &#39;clValid&#39;</code></pre>
-<pre><code>The following object is masked from &#39;package:igraph&#39;:
-
-    clusters</code></pre>
-<pre class="r"><code>library(&quot;parallel&quot;)
-library(Matrix)
-mk1 = multiple.kernel(sim$data1,cores.ratio = 0.5)
-mk2 = multiple.kernel(sim$data2,cores.ratio = 0.5)
-D_kernels = list()
-for(i in 1:110){
-  if(i&lt;=55){
-    D_kernels[[i]] = mk1[[i]]
-  }else if (i&lt;=110){
-    D_kernels[[i]] = mk2[[i-55]]
-  }
-}
-
-## calculate the simlr_multi without SNF
-sim_res = SIMLR_multi(D_Kernels = D_kernels, c = 3)</code></pre>
-<pre><code>Iteration:  1 
-Iteration:  2 
-Iteration:  3 
-Iteration:  4 
-Iteration:  5 
-Iteration:  6 
-Iteration:  7 
-Iteration:  8 
-Iteration:  9 
-Iteration:  10 </code></pre>
-<pre><code>Warning in SIMLR_multi(D_Kernels = D_kernels, c = 3): Maybe you should set a
-larger value of c.</code></pre>
-<pre><code>[1] 150
-Performing t-SNE.
-Epoch: Iteration # 100  error is:  0.9580798 
-Epoch: Iteration # 200  error is:  0.931895 
-Epoch: Iteration # 300  error is:  0.9294187 
-Epoch: Iteration # 400  error is:  0.9282864 
-Epoch: Iteration # 500  error is:  0.927408 
-Epoch: Iteration # 600  error is:  0.9267601 
-Epoch: Iteration # 700  error is:  0.9261759 
-Epoch: Iteration # 800  error is:  0.9257151 
-Epoch: Iteration # 900  error is:  0.9253101 
-Epoch: Iteration # 1000  error is:  0.9249692 
-Performing Kmeans.
-Performing t-SNE.
-Epoch: Iteration # 100  error is:  21.34117 
-Epoch: Iteration # 200  error is:  2.668857 
-Epoch: Iteration # 300  error is:  2.065903 
-Epoch: Iteration # 400  error is:  1.609242 
-Epoch: Iteration # 500  error is:  1.370344 
-Epoch: Iteration # 600  error is:  1.42602 
-Epoch: Iteration # 700  error is:  1.333115 
-Epoch: Iteration # 800  error is:  1.29425 
-Epoch: Iteration # 900  error is:  1.248563 
-Epoch: Iteration # 1000  error is:  1.180638 </code></pre>
-<pre class="r"><code>s_res = sim_res$S
-## the first 55 weights
-sum(sim_res$alphaK[1:55])</code></pre>
-<pre><code>[1] 0.780769</code></pre>
-<pre class="r"><code># ## calculate the SIMLR with SNF_initial
-# 
-# w1 = affinityMatrix(dist2_w(as.matrix(sim$data1),as.matrix(sim$data1), weight = sim$weight1))
-# w2 = affinityMatrix(dist2_w(as.matrix(sim$data2),as.matrix(sim$data2), weight = sim$weight2))
-# 
-# W = SNF(list(w1,w2))
-# sim_SNF_res = SIMLR_multi_SNF(D_Kernels = D_kernels,SNF_init = W,c = 3,cores.ratio = 0.5)
-# sum(sim_SNF_res$alphaK[1:55])
-# source(&quot;./code/functions/simulation_verify.R&quot;)
-# source(&quot;./code/functions/SIMLR_multi.R&quot;)
-# eva = simulation_verify_2data(3,sim,truelabel = sim$truelabel)</code></pre>
-<pre class="r"><code>multiplication_sum = NULL
-for(i in 1:110){
-  multiplication_sum = c(multiplication_sum,sum(as.matrix(D_kernels[[i]])*s_res))
-}
-## see the relationship btw multi_sum and weight
-par(mfrow = c(2,1))
-plot(1:110,multiplication_sum)
-plot(1:110, sim_res$alphaK)</code></pre>
-<p><img src="figure/trivial_analysis.rmd/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>par(mfrow = c(1,1))
-plot(multiplication_sum, sim_res$alphaK)</code></pre>
-<p><img src="figure/trivial_analysis.rmd/unnamed-chunk-11-2.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>## only focus on the 11 significantly contributed kernels
-par(mfrow = c(2,1))
-plot(seq(1,110,by = 5),multiplication_sum[seq(1,110,by = 5)],xaxt = &quot;n&quot;)
-axis(1, at = seq(1,110,by = 5),las = 2)
-plot(seq(1,110,by = 5), sim_res$alphaK[seq(1,110,by = 5)],xaxt = &quot;n&quot;)
-axis(1, at = seq(1,110,by = 5),las = 2)</code></pre>
-<p><img src="figure/trivial_analysis.rmd/unnamed-chunk-11-3.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>## the order of distance and the order of weights
-order_ms = sort(multiplication_sum,index.return = T)$ix
-order_weight = sort(sim_res$alphaK,decreasing = T, index.return = T)$ix
-par(mfrow = c(1,1))
-plot(order_ms, order_weight)
-abline(a = 1, b = 1)</code></pre>
-<p><img src="figure/trivial_analysis.rmd/unnamed-chunk-11-4.png" width="672" style="display: block; margin: auto;" /></p>
-</div>
 <div id="the-influence-of-rho" class="section level3">
 <h3>the influence of rho</h3>
-<p>Now we change <span class="math inline">\(\rho\)</span> to see the influence</p>
-<p>First, change the fucntion of umkl to make u as a changable parameter</p>
-<pre class="r"><code># fit the SIMLR for when u = 50
-sim_res_50u = SIMLR_multi_u(D_Kernels = D_kernels, c = 3, u = 50)</code></pre>
-<pre><code>Iteration:  1 
-Iteration:  2 
-Iteration:  3 
-Iteration:  4 
-Iteration:  5 
-Iteration:  6 
-Iteration:  7 
-Iteration:  8 
-Iteration:  9 
-Iteration:  10 </code></pre>
-<pre><code>Warning in SIMLR_multi_u(D_Kernels = D_kernels, c = 3, u = 50): Maybe you should
-set a larger value of c.</code></pre>
-<pre><code>[1] 150
-Performing t-SNE.
-Epoch: Iteration # 100  error is:  0.9317586 
-Epoch: Iteration # 200  error is:  0.925849 
-Epoch: Iteration # 300  error is:  0.924624 
-Epoch: Iteration # 400  error is:  0.9236158 
-Epoch: Iteration # 500  error is:  0.9227727 
-Epoch: Iteration # 600  error is:  0.9220494 
-Epoch: Iteration # 700  error is:  0.9214234 
-Epoch: Iteration # 800  error is:  0.9208786 
-Epoch: Iteration # 900  error is:  0.9204002 
-Epoch: Iteration # 1000  error is:  0.9199635 
-Performing Kmeans.
-Performing t-SNE.
-Epoch: Iteration # 100  error is:  21.03762 
-Epoch: Iteration # 200  error is:  2.682408 
-Epoch: Iteration # 300  error is:  1.993742 
-Epoch: Iteration # 400  error is:  1.687196 
-Epoch: Iteration # 500  error is:  1.299859 
-Epoch: Iteration # 600  error is:  2.149903 
-Epoch: Iteration # 700  error is:  1.708494 
-Epoch: Iteration # 800  error is:  1.436044 
-Epoch: Iteration # 900  error is:  1.527541 
-Epoch: Iteration # 1000  error is:  1.332775 </code></pre>
-<pre class="r"><code>s_50 = sim_res_50u$S
-sum(sim_res_50u$alphaK[1:55])</code></pre>
-<pre><code>[1] 0.5227395</code></pre>
-<pre class="r"><code># show the difference of weights when using different weight
-multiplication_sum_u50 = NULL
-for(i in 1:110){
-  multiplication_sum_u50 = c(multiplication_sum_u50,sum(as.matrix(D_kernels[[i]]) * s_50))
-}
-
-par(mfrow = c(2,2))
-## when u is 20
-plot(multiplication_sum[1:55], sim_res$alphaK[1:55],main = &quot;u = 20&quot;)
-plot(multiplication_sum[56:110], sim_res$alphaK[56:110],main = &quot;u = 20&quot;)
-## when u is 50
-plot(multiplication_sum_u50[1:55], sim_res_50u$alphaK[1:55],main = &quot;u = 50&quot;)
-plot(multiplication_sum_u50[56:110], sim_res_50u$alphaK[56:110],main = &quot;u = 50&quot;)</code></pre>
-<p><img src="figure/trivial_analysis.rmd/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>From the plot, we can see that when u increases, weights are more balanced.</p>
-<pre class="r"><code># See the influence to the results for different weight
-compare(sim_res$y$cluster, sim$truelabel,method = &quot;nmi&quot;)</code></pre>
-<pre><code>[1] 0.8705214</code></pre>
-<pre class="r"><code>compare(sim_res_50u$y$cluster, sim$truelabel,method = &quot;nmi&quot;)</code></pre>
-<pre><code>[1] 0.9701912</code></pre>
-<p>From this single running, we can see the large U will increase the performance of SIMLR Also, I run the simulation multiple times for different scenario to see the effect of U</p>
+<p>Simulation of different scenario to see the effect of U</p>
 <p>Scenario: * eff_size: c(5,5),c(3,7) * sub_ratio: rep(1/3,3),c(0.3,0.4,0.3)</p>
 <p>Under every scenario, we test U = c(20,30,40,50) separately</p>
-<p>We will focus * the sum of weight for first data type * the final preformance.</p>
+<p>We will focus * the sum of weight for first data type * the final performance.</p>
 <pre class="r"><code>files = list.files(&quot;./data/simulation_rho/&quot;)
 table_rho = NULL
 for(i in 1:length(files)){
@@ -1291,29 +1039,30 @@ table_rho_mean = table_rho %&gt;%
   mutate(nmi_improve = nmi_SIMLR-nmi_SNF) %&gt;% 
   arrange(desc(nmi_improve))
 
-View(table_rho_mean)
-## show the weight change among U
+table_rho_mean%&gt;% 
+  separate(scenario, into = c(&quot;sub_eff&quot;,&quot;U&quot;), sep = &quot;_(?=[^_]+$)&quot;) %&gt;%
+  pivot_longer(
+    nmi_SNF:nmi_SIMLR,
+    names_to = &quot;methods&quot;,
+    values_to = &quot;value&quot;
+  ) %&gt;% 
+  ggplot(aes(x = U,y = value,color = methods)) +
+  geom_boxplot()+
+  facet_grid(sub_eff~.)</code></pre>
+<p><img src="figure/trivial_analysis.rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>## show the weight change among U
 table_rho %&gt;% 
   separate(scenario, into = c(&quot;sub_eff&quot;,&quot;U&quot;), sep = &quot;_(?=[^_]+$)&quot;) %&gt;%
   ggplot(aes(x = U,y = data1_weight,color = sub_eff)) +
   geom_boxplot()</code></pre>
-<p><img src="figure/trivial_analysis.rmd/unnamed-chunk-15-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/trivial_analysis.rmd/unnamed-chunk-5-2.png" width="672" style="display: block; margin: auto;" /></p>
 <p>From the simulation, we can see, when the variance is not extremely large, the performance of SIMLR will be relative stable. Only by changing weight, the performance of SIMLR can’t show greater improve than SNF</p>
+<p>Here, we can see the parameter <span class="math inline">\(\rho\)</span> (Or in this algorithm U) has a dominant role to control the variation of weights between kernels and data types. In this algorithm, the U is set to be 20 for all situation, which may not be proper for all situation.</p>
 </div>
 </div>
-<div id="the-influence-of-weight" class="section level2">
-<h2>The influence of weight</h2>
-<p>Here we see weight is depend on both the multiplication sum and the hyper-parameter <span class="math inline">\(\rho\)</span>, but we still don’t know:</p>
-<ul>
-<li>how weight make difference to the final SIMLR results?</li>
-<li>Is it meaningful to upweight the data with weaker signal?</li>
-</ul>
-<div id="how-would-weight-changing-influence-the-final-performance" class="section level3">
-<h3>How would weight-changing influence the final performance?</h3>
-<div id="data-simulation-with-different-signal-strength" class="section level4">
-<h4>Data simulation with different signal strength</h4>
-<p>Here we are focusing on the weak signals’ performnce, so we choose simulation data with distinguish signal strength.</p>
-<p>We use the effective size to divide the signals strength, but sub_ratio division will be shown in simulaion</p>
+<div id="effect-of-simlr" class="section level2">
+<h2>Effect of SIMLR</h2>
+<p>– see the change of integrated similarity matrix</p>
 <pre class="r"><code>## Data simulation
 set.seed(34)
 sim_eff37 = simulation_2(eff_size = c(3,7),sigma = c(18,(49*2)))
@@ -1323,11 +1072,7 @@ par(mfrow = c(1,1))
 plot(1:150, rowMeans(sim_eff37$data2[,1:50]),col = &quot;red&quot;) 
 ### data1 has weaker signals also smaller var
 points(1:150, rowMeans(sim_eff37$data1[,1:50]))</code></pre>
-<p><img src="figure/trivial_analysis.rmd/unnamed-chunk-16-1.png" width="672" style="display: block; margin: auto;" /></p>
-</div>
-<div id="weight-fixed-simlr" class="section level4">
-<h4>Weight fixed SIMLR</h4>
-<p>Here we fit SIMLR separately for 2 data and get the kernels weight separatey</p>
+<p><img src="figure/trivial_analysis.rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>## normalize data
 data1 = standardNormalization(sim_eff37$data1)
 data2 = standardNormalization(sim_eff37$data2)
@@ -1348,28 +1093,28 @@ Iteration:  9
 Iteration:  10 </code></pre>
 <pre><code>Warning in SIMLR(t(data1), c = 2): Maybe you should set a larger value of c.</code></pre>
 <pre><code>Performing t-SNE.
-Epoch: Iteration # 100  error is:  0.1476069 
-Epoch: Iteration # 200  error is:  0.1427758 
-Epoch: Iteration # 300  error is:  0.141879 
-Epoch: Iteration # 400  error is:  0.1418759 
-Epoch: Iteration # 500  error is:  0.1418759 
-Epoch: Iteration # 600  error is:  0.1418759 
-Epoch: Iteration # 700  error is:  0.1418759 
-Epoch: Iteration # 800  error is:  0.1418759 
-Epoch: Iteration # 900  error is:  0.1418759 
-Epoch: Iteration # 1000  error is:  0.1418759 
+Epoch: Iteration # 100  error is:  1.362264 
+Epoch: Iteration # 200  error is:  0.8925151 
+Epoch: Iteration # 300  error is:  0.7063483 
+Epoch: Iteration # 400  error is:  0.4523206 
+Epoch: Iteration # 500  error is:  0.1335415 
+Epoch: Iteration # 600  error is:  0.1335126 
+Epoch: Iteration # 700  error is:  0.1335126 
+Epoch: Iteration # 800  error is:  0.1335126 
+Epoch: Iteration # 900  error is:  0.1335126 
+Epoch: Iteration # 1000  error is:  0.1335126 
 Performing Kmeans.
 Performing t-SNE.
-Epoch: Iteration # 100  error is:  20.31832 
-Epoch: Iteration # 200  error is:  1.347726 
-Epoch: Iteration # 300  error is:  0.8308289 
-Epoch: Iteration # 400  error is:  0.6982239 
-Epoch: Iteration # 500  error is:  0.9568906 
-Epoch: Iteration # 600  error is:  0.7165129 
-Epoch: Iteration # 700  error is:  0.7661221 
-Epoch: Iteration # 800  error is:  0.6693819 
-Epoch: Iteration # 900  error is:  0.6282362 
-Epoch: Iteration # 1000  error is:  0.2095464 </code></pre>
+Epoch: Iteration # 100  error is:  15.01244 
+Epoch: Iteration # 200  error is:  1.298033 
+Epoch: Iteration # 300  error is:  0.97185 
+Epoch: Iteration # 400  error is:  0.8181788 
+Epoch: Iteration # 500  error is:  0.9069607 
+Epoch: Iteration # 600  error is:  0.8901111 
+Epoch: Iteration # 700  error is:  0.7958121 
+Epoch: Iteration # 800  error is:  0.6989308 
+Epoch: Iteration # 900  error is:  0.7612859 
+Epoch: Iteration # 1000  error is:  0.1387673 </code></pre>
 <pre class="r"><code>res2 = SIMLR(t(data2),c = 2)</code></pre>
 <pre><code>Computing the multiple Kernels.
 Performing network diffiusion.
@@ -1385,28 +1130,28 @@ Iteration:  9
 Iteration:  10 </code></pre>
 <pre><code>Warning in SIMLR(t(data2), c = 2): Maybe you should set a larger value of c.</code></pre>
 <pre><code>Performing t-SNE.
-Epoch: Iteration # 100  error is:  1.338702 
-Epoch: Iteration # 200  error is:  0.7958512 
-Epoch: Iteration # 300  error is:  0.7066354 
-Epoch: Iteration # 400  error is:  0.198662 
-Epoch: Iteration # 500  error is:  0.1307042 
-Epoch: Iteration # 600  error is:  0.1306997 
-Epoch: Iteration # 700  error is:  0.1306997 
-Epoch: Iteration # 800  error is:  0.1306997 
-Epoch: Iteration # 900  error is:  0.1306997 
-Epoch: Iteration # 1000  error is:  0.1306997 
+Epoch: Iteration # 100  error is:  1.194049 
+Epoch: Iteration # 200  error is:  1.024211 
+Epoch: Iteration # 300  error is:  1.0368 
+Epoch: Iteration # 400  error is:  0.8314913 
+Epoch: Iteration # 500  error is:  0.8539317 
+Epoch: Iteration # 600  error is:  0.6738982 
+Epoch: Iteration # 700  error is:  0.8938559 
+Epoch: Iteration # 800  error is:  0.6988512 
+Epoch: Iteration # 900  error is:  0.6376507 
+Epoch: Iteration # 1000  error is:  0.2398244 
 Performing Kmeans.
 Performing t-SNE.
-Epoch: Iteration # 100  error is:  19.8327 
-Epoch: Iteration # 200  error is:  1.224019 
-Epoch: Iteration # 300  error is:  0.885877 
-Epoch: Iteration # 400  error is:  1.046093 
-Epoch: Iteration # 500  error is:  0.776506 
-Epoch: Iteration # 600  error is:  0.6828011 
-Epoch: Iteration # 700  error is:  0.7826884 
-Epoch: Iteration # 800  error is:  0.6793153 
-Epoch: Iteration # 900  error is:  0.8409255 
-Epoch: Iteration # 1000  error is:  0.6839049 </code></pre>
+Epoch: Iteration # 100  error is:  16.03722 
+Epoch: Iteration # 200  error is:  1.382657 
+Epoch: Iteration # 300  error is:  1.001071 
+Epoch: Iteration # 400  error is:  0.8125381 
+Epoch: Iteration # 500  error is:  0.6905728 
+Epoch: Iteration # 600  error is:  0.6427157 
+Epoch: Iteration # 700  error is:  0.1741059 
+Epoch: Iteration # 800  error is:  0.1650264 
+Epoch: Iteration # 900  error is:  0.1649004 
+Epoch: Iteration # 1000  error is:  0.1647973 </code></pre>
 <pre class="r"><code>opt_w1 = res1$alphaK
 opt_w2 = res2$alphaK
 weight_list = list(opt_w1 = opt_w1, opt_w2 = opt_w2)
@@ -1421,136 +1166,92 @@ for(i in 1:110){
   }else if (i&lt;=110){
     D_kernels[[i]] = mk2[[i-55]]
   }
-}
-
-## change weight of 2 datas to see the performance
-source(&quot;./code/functions/SIMLR_no_weights.R&quot;)
-w_data = mapply(c, seq(0.1,0.9,by = 0.2), seq(0.9,0.1, by = -0.2),SIMPLIFY = F)
-nmi_fixed = NULL
-S_list = list()
-cluster_list = list()
-for(i in 1:length(w_data)){
-  res_f = SIMLR_multi_fix_weight(D_Kernels = D_kernels,c = 3, weight_list = weight_list, w_data = w_data[[i]])
-  S_list[[i]] = res_f$S
-  cluster_list[[i]] = res_f$y$cluster
-  nmi_fixed = c(nmi_fixed, compare(res_f$y$cluster, truelabel, method = &quot;nmi&quot;))
 }</code></pre>
+<div id="what-is-the-difference-btw-initial-s_0-and-s-after-simlr-optimization" class="section level3">
+<h3>What is the difference btw initial S_0 and S after SIMLR optimization?</h3>
+<pre class="r"><code>## we fisrt see the effect of averaged S_ij
+### calculate the initial averaged S_ij
+sum_kernels = matrix(0,150,150)
+for(i in 1:length(D_kernels)){
+  sum_kernels = sum_kernels+as.matrix(D_kernels[[i]])
+}
+s0 =  sum_kernels/length(D_kernels)
+s0 = max(s0) - s0
+cluster_s0 = spectralClustering(s0,3)
+heatmap(s0, Rowv = NA, Colv = NA, scale = &quot;column&quot;)</code></pre>
+<p><img src="figure/trivial_analysis.rmd/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-8-1">
+Past versions of unnamed-chunk-8-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-8-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yuqimiao/multiomics-SIMLR/blob/d459d2bc8716de73ed4ed2f24ef82198649140ca/docs/figure/trivial_analysis.rmd/unnamed-chunk-8-1.png" target="_blank">d459d2b</a>
+</td>
+<td>
+yuqimiao
+</td>
+<td>
+2020-09-23
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>## Now we see the similarity matrix resulting from SIMLR
+source(&quot;./code/functions/SIMLR_multi.R&quot;)</code></pre>
+<pre><code>
+Attaching package: &#39;gplots&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:stats&#39;:
+
+    lowess</code></pre>
+<pre><code>
+Attaching package: &#39;igraph&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:dplyr&#39;:
+
+    as_data_frame, groups, union</code></pre>
+<pre><code>The following objects are masked from &#39;package:purrr&#39;:
+
+    compose, simplify</code></pre>
+<pre><code>The following object is masked from &#39;package:tidyr&#39;:
+
+    crossing</code></pre>
+<pre><code>The following object is masked from &#39;package:tibble&#39;:
+
+    as_data_frame</code></pre>
+<pre><code>The following objects are masked from &#39;package:stats&#39;:
+
+    decompose, spectrum</code></pre>
+<pre><code>The following object is masked from &#39;package:base&#39;:
+
+    union</code></pre>
+<pre><code>Loading required package: cluster</code></pre>
+<pre><code>
+Attaching package: &#39;clValid&#39;</code></pre>
+<pre><code>The following object is masked from &#39;package:igraph&#39;:
+
+    clusters</code></pre>
+<pre class="r"><code>sim_res = SIMLR_multi(D_Kernels = D_kernels, c = 3)</code></pre>
 <pre><code>Iteration:  1 
-Iteration:  2 
-Iteration:  3 
-Iteration:  4 
-Iteration:  5 
-Iteration:  6 
-Iteration:  7 
-Iteration:  8 
-Iteration:  9 
-Iteration:  10 </code></pre>
-<pre><code>Warning in SIMLR_multi_fix_weight(D_Kernels = D_kernels, c = 3, weight_list =
-weight_list, : Maybe you should set a larger value of c.</code></pre>
-<pre><code>[1] 150
-Performing t-SNE.
-Epoch: Iteration # 100  error is:  1.434678 
-Epoch: Iteration # 200  error is:  1.329142 
-Epoch: Iteration # 300  error is:  1.279401 
-Epoch: Iteration # 400  error is:  1.274282 
-Epoch: Iteration # 500  error is:  1.273015 
-Epoch: Iteration # 600  error is:  1.272433 
-Epoch: Iteration # 700  error is:  1.271841 
-Epoch: Iteration # 800  error is:  1.271392 
-Epoch: Iteration # 900  error is:  1.270108 
-Epoch: Iteration # 1000  error is:  1.270067 
-Performing Kmeans.
-Performing t-SNE.
-Epoch: Iteration # 100  error is:  23.90626 
-Epoch: Iteration # 200  error is:  3.11765 
-Epoch: Iteration # 300  error is:  2.686785 
-Epoch: Iteration # 400  error is:  2.398984 
-Epoch: Iteration # 500  error is:  2.211409 
-Epoch: Iteration # 600  error is:  2.060641 
-Epoch: Iteration # 700  error is:  3.454158 
-Epoch: Iteration # 800  error is:  2.154869 
-Epoch: Iteration # 900  error is:  2.132855 
-Epoch: Iteration # 1000  error is:  1.894342 
-Iteration:  1 
-Iteration:  2 
-Iteration:  3 
-Iteration:  4 
-Iteration:  5 
-Iteration:  6 
-Iteration:  7 
-Iteration:  8 
-Iteration:  9 
-Iteration:  10 
-Iteration:  11 
-Iteration:  12 
-Iteration:  13 
-Iteration:  14 
-Iteration:  15 
-Iteration:  16 </code></pre>
-<pre><code>Warning in SIMLR_multi_fix_weight(D_Kernels = D_kernels, c = 3, weight_list =
-weight_list, : Maybe you should set a larger value of c.</code></pre>
-<pre><code>[1] 150
-Performing t-SNE.
-Epoch: Iteration # 100  error is:  1.426763 
-Epoch: Iteration # 200  error is:  1.380901 
-Epoch: Iteration # 300  error is:  1.300302 
-Epoch: Iteration # 400  error is:  1.247993 
-Epoch: Iteration # 500  error is:  1.284049 
-Epoch: Iteration # 600  error is:  1.245708 
-Epoch: Iteration # 700  error is:  1.205452 
-Epoch: Iteration # 800  error is:  1.205047 
-Epoch: Iteration # 900  error is:  1.205023 
-Epoch: Iteration # 1000  error is:  1.205009 
-Performing Kmeans.
-Performing t-SNE.
-Epoch: Iteration # 100  error is:  24.69269 
-Epoch: Iteration # 200  error is:  3.206753 
-Epoch: Iteration # 300  error is:  3.241894 
-Epoch: Iteration # 400  error is:  2.411839 
-Epoch: Iteration # 500  error is:  2.80144 
-Epoch: Iteration # 600  error is:  1.96068 
-Epoch: Iteration # 700  error is:  1.90415 
-Epoch: Iteration # 800  error is:  1.684428 
-Epoch: Iteration # 900  error is:  1.63551 
-Epoch: Iteration # 1000  error is:  1.621914 
-Iteration:  1 
-Iteration:  2 
-Iteration:  3 
-Iteration:  4 
-Iteration:  5 
-Iteration:  6 
-Iteration:  7 
-Iteration:  8 
-Iteration:  9 
-Iteration:  10 
-Iteration:  11 
-Iteration:  12 
-Iteration:  13 
-[1] 150
-Performing t-SNE.
-Epoch: Iteration # 100  error is:  1.366724 
-Epoch: Iteration # 200  error is:  1.22543 
-Epoch: Iteration # 300  error is:  1.204505 
-Epoch: Iteration # 400  error is:  1.214772 
-Epoch: Iteration # 500  error is:  1.158994 
-Epoch: Iteration # 600  error is:  1.232693 
-Epoch: Iteration # 700  error is:  1.204697 
-Epoch: Iteration # 800  error is:  1.187089 
-Epoch: Iteration # 900  error is:  1.215718 
-Epoch: Iteration # 1000  error is:  1.150525 
-Performing Kmeans.
-Performing t-SNE.
-Epoch: Iteration # 100  error is:  23.55743 
-Epoch: Iteration # 200  error is:  4.14069 
-Epoch: Iteration # 300  error is:  3.729381 
-Epoch: Iteration # 400  error is:  2.544075 
-Epoch: Iteration # 500  error is:  2.949063 
-Epoch: Iteration # 600  error is:  2.260336 
-Epoch: Iteration # 700  error is:  1.900858 
-Epoch: Iteration # 800  error is:  2.166565 
-Epoch: Iteration # 900  error is:  1.918338 
-Epoch: Iteration # 1000  error is:  1.856616 
-Iteration:  1 
 Iteration:  2 
 Iteration:  3 
 Iteration:  4 
@@ -1579,146 +1280,38 @@ Iteration:  26
 Iteration:  27 
 Iteration:  28 
 Iteration:  29 
-Iteration:  30 </code></pre>
-<pre><code>Warning in SIMLR_multi_fix_weight(D_Kernels = D_kernels, c = 3, weight_list =
-weight_list, : Maybe you should set a larger value of c.</code></pre>
-<pre><code>[1] 150
-Performing t-SNE.
-Epoch: Iteration # 100  error is:  1.759 
-Epoch: Iteration # 200  error is:  1.554139 
-Epoch: Iteration # 300  error is:  1.531787 
-Epoch: Iteration # 400  error is:  1.539285 
-Epoch: Iteration # 500  error is:  1.49412 
-Epoch: Iteration # 600  error is:  1.435276 
-Epoch: Iteration # 700  error is:  1.466894 
-Epoch: Iteration # 800  error is:  1.38226 
-Epoch: Iteration # 900  error is:  1.412896 
-Epoch: Iteration # 1000  error is:  1.475316 
-Performing Kmeans.
-Performing t-SNE.
-Epoch: Iteration # 100  error is:  22.67138 
-Epoch: Iteration # 200  error is:  3.585961 
-Epoch: Iteration # 300  error is:  2.813455 
-Epoch: Iteration # 400  error is:  2.57101 
-Epoch: Iteration # 500  error is:  2.10672 
-Epoch: Iteration # 600  error is:  1.772652 
-Epoch: Iteration # 700  error is:  2.075043 
-Epoch: Iteration # 800  error is:  1.884877 
-Epoch: Iteration # 900  error is:  2.659067 
-Epoch: Iteration # 1000  error is:  2.580429 
-Iteration:  1 
-Iteration:  2 
-Iteration:  3 
-Iteration:  4 
-Iteration:  5 
-Iteration:  6 
-Iteration:  7 
-Iteration:  8 
-Iteration:  9 
-Iteration:  10 
-Iteration:  11 
-Iteration:  12 
+Iteration:  30 
 [1] 150
 Performing t-SNE.
-Epoch: Iteration # 100  error is:  1.460161 
-Epoch: Iteration # 200  error is:  1.292336 
-Epoch: Iteration # 300  error is:  1.27056 
-Epoch: Iteration # 400  error is:  1.165717 
-Epoch: Iteration # 500  error is:  1.159881 
-Epoch: Iteration # 600  error is:  1.15766 
-Epoch: Iteration # 700  error is:  1.156864 
-Epoch: Iteration # 800  error is:  1.156594 
-Epoch: Iteration # 900  error is:  1.156505 
-Epoch: Iteration # 1000  error is:  1.156468 
+Epoch: Iteration # 100  error is:  1.344411 
+Epoch: Iteration # 200  error is:  1.225754 
+Epoch: Iteration # 300  error is:  1.211949 
+Epoch: Iteration # 400  error is:  1.207015 
+Epoch: Iteration # 500  error is:  1.206727 
+Epoch: Iteration # 600  error is:  1.206622 
+Epoch: Iteration # 700  error is:  1.202785 
+Epoch: Iteration # 800  error is:  1.202686 
+Epoch: Iteration # 900  error is:  1.202584 
+Epoch: Iteration # 1000  error is:  1.202486 
 Performing Kmeans.
 Performing t-SNE.
-Epoch: Iteration # 100  error is:  24.57099 
-Epoch: Iteration # 200  error is:  3.22334 
-Epoch: Iteration # 300  error is:  2.680551 
-Epoch: Iteration # 400  error is:  2.028198 
-Epoch: Iteration # 500  error is:  2.435684 
-Epoch: Iteration # 600  error is:  2.11171 
-Epoch: Iteration # 700  error is:  1.725489 
-Epoch: Iteration # 800  error is:  1.796013 
-Epoch: Iteration # 900  error is:  2.076346 
-Epoch: Iteration # 1000  error is:  1.996991 </code></pre>
-<pre class="r"><code>plot(seq(0.1,0.9,by = 0.2),nmi_fixed, xlab = &quot;data1_weight&quot;)
-lines(seq(0.1,0.9,by = 0.2),nmi_fixed)</code></pre>
-<p><img src="figure/trivial_analysis.rmd/unnamed-chunk-17-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>nmi_fixed</code></pre>
-<pre><code>[1] 0.6459760 0.6279600 0.6491446 0.6275189 0.5256233</code></pre>
-<pre class="r"><code>## compare SIMLR_multi
-sim_multi_res = SIMLR_multi(D_Kernels = D_kernels,c = 3)</code></pre>
-<pre><code>Iteration:  1 
-Iteration:  2 
-Iteration:  3 
-Iteration:  4 
-Iteration:  5 
-Iteration:  6 
-Iteration:  7 
-Iteration:  8 
-Iteration:  9 
-Iteration:  10 
-Iteration:  11 </code></pre>
-<pre><code>Warning in SIMLR_multi(D_Kernels = D_kernels, c = 3): Maybe you should set a
-larger value of c.</code></pre>
-<pre><code>[1] 150
-Performing t-SNE.
-Epoch: Iteration # 100  error is:  0.9969508 
-Epoch: Iteration # 200  error is:  0.9688448 
-Epoch: Iteration # 300  error is:  0.967231 
-Epoch: Iteration # 400  error is:  0.9664355 
-Epoch: Iteration # 500  error is:  0.9657663 
-Epoch: Iteration # 600  error is:  0.9651987 
-Epoch: Iteration # 700  error is:  0.9646936 
-Epoch: Iteration # 800  error is:  0.964258 
-Epoch: Iteration # 900  error is:  0.9638759 
-Epoch: Iteration # 1000  error is:  0.9635386 
-Performing Kmeans.
-Performing t-SNE.
-Epoch: Iteration # 100  error is:  23.84248 
-Epoch: Iteration # 200  error is:  2.838191 
-Epoch: Iteration # 300  error is:  2.353247 
-Epoch: Iteration # 400  error is:  1.62152 
-Epoch: Iteration # 500  error is:  1.980576 
-Epoch: Iteration # 600  error is:  1.825637 
-Epoch: Iteration # 700  error is:  1.390285 
-Epoch: Iteration # 800  error is:  1.473021 
-Epoch: Iteration # 900  error is:  1.379392 
-Epoch: Iteration # 1000  error is:  1.286734 </code></pre>
-<pre class="r"><code>compare(sim_multi_res$y$cluster, truelabel,method = &quot;nmi&quot;)</code></pre>
-<pre><code>[1] 0.7507393</code></pre>
-<pre class="r"><code>## compare to SNF pwerformance
-af1 = affinityMatrix(dist2_w(as.matrix(data1),as.matrix(data1), weight = sim_eff37$weight1))
-af2 = affinityMatrix(dist2_w(as.matrix(data2),as.matrix(data2), weight = sim_eff37$weight2))
-W = SNF(list(af1,af2))
-cluster_SNF = spectralClustering(W,3)
-
-compare(cluster_SNF, truelabel,method = &quot;nmi&quot;)</code></pre>
-<pre><code>[1] 0.8636442</code></pre>
-<p>From above analysis, we can first see that fix weight for data separately will decrease the performance, and changing weight has no specific influence to the final performance unless the important signal is being down weighted too much</p>
-<pre class="r"><code>files = list.files(&quot;./data/simulation_fixWeight/&quot;)
-file_nmi = files[str_detect(files,&quot;nmi&quot;)]
-table_fix = NULL
-for(i in 1:length(file_nmi)){
-  table_cur = readRDS(paste(&quot;./data/simulation_fixWeight/&quot;,file_nmi[i],sep = &quot;&quot;))
-  table_fix = rbind(table_fix,table_cur)
-}
-
-table_fix_mean = table_fix %&gt;% 
-  group_by(scenario) %&gt;% 
-  summarise_all(mean)
-View(table_fix_mean)</code></pre>
-</div>
-</div>
-<div id="show-snf-after-similar" class="section level3">
-<h3>Show SNF after similar</h3>
-<pre class="r"><code>W = SNF(list(res1$S,res2$S))
-compare(spectralClustering(W,3), sim$truelabel,method = &quot;nmi&quot;)</code></pre>
-<pre><code>[1] 0.5164203</code></pre>
-</div>
-<div id="what-is-the-difference-btw-initial-s_0-and-s-after-simlr-optimization" class="section level3">
-<h3>What is the difference btw initial S_0 and S after SIMLR optimization?</h3>
+Epoch: Iteration # 100  error is:  20.97345 
+Epoch: Iteration # 200  error is:  2.970315 
+Epoch: Iteration # 300  error is:  2.228818 
+Epoch: Iteration # 400  error is:  2.002058 
+Epoch: Iteration # 500  error is:  1.771497 
+Epoch: Iteration # 600  error is:  1.727241 
+Epoch: Iteration # 700  error is:  1.662791 
+Epoch: Iteration # 800  error is:  1.575334 
+Epoch: Iteration # 900  error is:  1.59419 
+Epoch: Iteration # 1000  error is:  1.588558 </code></pre>
+<pre class="r"><code>s_res = sim_res$S
+heatmap(s_res, Rowv = NA, Colv = NA, scale = &quot;column&quot;)</code></pre>
+<p><img src="figure/trivial_analysis.rmd/unnamed-chunk-8-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>compare(sim_res$y$cluster,rep(c(1,2,3), each = 50), method = &quot;nmi&quot;)</code></pre>
+<pre><code>[1] 0.6643379</code></pre>
+<pre class="r"><code>compare(cluster_s0,rep(c(1,2,3), each = 50), method = &quot;nmi&quot;)</code></pre>
+<pre><code>[1] 0.8894835</code></pre>
 <p>As shown here, the multiplication sum has trivial difference for the initial <span class="math inline">\(S_0\)</span>, but after the optimization by SIMLR, the difference btw 2 multiplication_sum become larger.</p>
 <p><em>Is this right? What is the role of S here? should the data be far away?</em></p>
 </div>
@@ -1730,20 +1323,14 @@ compare(spectralClustering(W,3), sim$truelabel,method = &quot;nmi&quot;)</code><
 <h2>Problem of SIMLR in this simulation</h2>
 <div id="different-clusters-has-different-contribution-requirment-from-data" class="section level3">
 <h3>Different clusters has different contribution requirment from data</h3>
-<div id="data-simulation-1" class="section level4">
+<div id="data-simulation" class="section level4">
 <h4>Data simulation</h4>
 <pre class="r"><code>set.seed(234)
 ## get 2 balanced data type
 library(tidyverse)
 source(&quot;./code/functions/simulation_function.R&quot;)
 set.seed(111)
-sim = simulation_2(size = 150, sub_ratio = rep(1/3,3), eff_size = c(5,5), sigma = c(100,100),data_divide = c(&quot;1/23&quot;,&quot;12/3&quot;),dist = c(&quot;normal&quot;,&quot;normal&quot;))
-
-## see the distribution of 2 data types
-par(mfrow = c(2,1))
-plot(1:150, rowMeans(sim$data1[,1:50]),main = &quot;data1&quot;)
-plot(1:150, rowMeans(sim$data2[,1:50]),main = &quot;data2&quot;)</code></pre>
-<p><img src="figure/trivial_analysis.rmd/unnamed-chunk-21-1.png" width="672" style="display: block; margin: auto;" /></p>
+sim = simulation_2(size = 150, sub_ratio = rep(1/3,3), eff_size = c(5,5), sigma = c(100,100),data_divide = c(&quot;1/23&quot;,&quot;12/3&quot;),dist = c(&quot;normal&quot;,&quot;normal&quot;))</code></pre>
 <pre class="r"><code>## separately fit the similarity matrix
 res1 = SIMLR(t(sim$data1),2)
 res2 = SIMLR(t(sim$data2),2)
@@ -1797,6 +1384,7 @@ plot(1:150^2,res2$S)</code></pre>
 <pre class="r"><code>## first calculate the weighted distance
 mk1 = multiple.kernel(sim$data1,cores.ratio = 0.5)
 mk2 = multiple.kernel(sim$data2,cores.ratio = 0.5)
+
 opt_dist1 = matrix(0,150,150)
 for(i in 1:55){
   opt_dist1 = opt_dist1 + res1$alphaK[i]*mk1[[i]]
@@ -1829,18 +1417,6 @@ compare(res_sep$y$cluster, sim$truelabel,method = &quot;nmi&quot;)</code></pre>
 <div id="to-think-add-freedom-of-weight-specific-weight-for-every-cluster" class="section level3">
 <h3>[TO THINK] Add freedom of weight – specific weight for every cluster</h3>
 <p>New term in the objective function: <span class="math display">\[\min_{w} \sum_{i,j,t,l}w_{tl}D_{l,i,j}S_{ij}I\{sub_{ij}\in C_t\}\]</span> t is for different cluster</p>
-</div>
-</div>
-</div>
-<div id="the-influence-of-variance" class="section level1">
-<h1>The influence of variance</h1>
-<p>From the above 3_data_3_group table, the SIMLR performance show a severe reduction. For I always using the distribution with small variance, which both methods are having a better performance.</p>
-<p><em>See the simulation result with changing variance, where the variance is changing with the effective size</em></p>
-</div>
-<div id="the-influence-of-normalize" class="section level1">
-<h1>The influence of normalize</h1>
-<div id="the-multiple-relation-btw-mean-and-variance" class="section level2">
-<h2>the multiple relation btw mean and variance</h2>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1851,7 +1427,7 @@ compare(res_sep$y$cluster, sim$truelabel,method = &quot;nmi&quot;)</code></pre>
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>R version 3.6.2 (2019-12-12)
 Platform: x86_64-apple-darwin15.6.0 (64-bit)
-Running under: macOS Catalina 10.15.2
+Running under: macOS Catalina 10.15.7
 
 Matrix products: default
 BLAS:   /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRblas.0.dylib
@@ -1865,32 +1441,33 @@ attached base packages:
 [8] base     
 
 other attached packages:
- [1] clValid_0.6-9   cluster_2.1.0   gplots_3.0.3    Matrix_1.2-18  
- [5] SNFtool_2.3.0   SIMLR_1.12.0    abSNF_1.0.0     forcats_0.5.0  
+ [1] clValid_0.6-9   cluster_2.1.0   igraph_1.2.5    gplots_3.0.3   
+ [5] Matrix_1.2-18   SIMLR_1.12.0    abSNF_1.0.0     forcats_0.5.0  
  [9] stringr_1.4.0   dplyr_0.8.5     purrr_0.3.3     readr_1.3.1    
 [13] tidyr_1.0.2     tibble_3.0.0    ggplot2_3.3.0   tidyverse_1.3.0
-[17] igraph_1.2.5    workflowr_1.6.2
+[17] rlist_0.4.6.1   SNFtool_2.3.0   workflowr_1.6.2
 
 loaded via a namespace (and not attached):
  [1] nlme_3.1-145       bitops_1.0-6       fs_1.4.1           lubridate_1.7.8   
  [5] RcppAnnoy_0.0.16   httr_1.4.1         rprojroot_1.3-2    tools_3.6.2       
- [9] backports_1.1.6    utf8_1.1.4         R6_2.4.1           KernSmooth_2.23-16
+ [9] backports_1.2.0    utf8_1.1.4         R6_2.4.1           KernSmooth_2.23-16
 [13] DBI_1.1.0          colorspace_1.4-1   withr_2.1.2        tidyselect_1.0.0  
 [17] compiler_3.6.2     git2r_0.26.1       cli_2.0.2          rvest_0.3.5       
 [21] xml2_1.3.0         labeling_0.3       caTools_1.18.0     scales_1.1.0      
 [25] digest_0.6.25      rmarkdown_2.1      pkgconfig_2.0.3    htmltools_0.4.0   
-[29] prettyGraphs_2.1.6 dbplyr_1.4.2       rlang_0.4.5        readxl_1.3.1      
+[29] prettyGraphs_2.1.6 dbplyr_1.4.2       rlang_0.4.8        readxl_1.3.1      
 [33] rstudioapi_0.11    farver_2.0.3       generics_0.0.2     jsonlite_1.6.1    
-[37] gtools_3.8.2       magrittr_1.5       heatmap.plus_1.3   Rcpp_1.0.4.6      
+[37] gtools_3.8.2       magrittr_1.5       heatmap.plus_1.3   Rcpp_1.0.5        
 [41] munsell_0.5.0      fansi_0.4.1        lifecycle_0.2.0    stringi_1.4.6     
 [45] whisker_0.4        yaml_2.2.1         grid_3.6.2         gdata_2.18.0      
-[49] promises_1.1.0     crayon_1.3.4       lattice_0.20-41    haven_2.2.0       
+[49] promises_1.1.0     crayon_1.3.4       lattice_0.20-41    haven_2.3.1       
 [53] hms_0.5.3          knitr_1.28         pillar_1.4.3       codetools_0.2-16  
 [57] reprex_0.3.0       glue_1.4.0         evaluate_0.14      alluvial_0.1-2    
-[61] modelr_0.1.6       vctrs_0.2.4        httpuv_1.5.2       cellranger_1.1.0  
-[65] gtable_0.3.0       ExPosition_2.8.23  assertthat_0.2.1   xfun_0.12         
-[69] broom_0.5.5        pracma_2.2.9       RSpectra_0.16-0    later_1.0.0       
-[73] class_7.3-16       ellipsis_0.3.0    </code></pre>
+[61] data.table_1.12.8  modelr_0.1.6       vctrs_0.3.4        httpuv_1.5.2      
+[65] cellranger_1.1.0   gtable_0.3.0       ExPosition_2.8.23  assertthat_0.2.1  
+[69] xfun_0.12          broom_0.5.5        pracma_2.2.9       RSpectra_0.16-0   
+[73] later_1.0.0        class_7.3-16       ellipsis_0.3.0    </code></pre>
+</div>
 </div>
 </div>
 </div>
