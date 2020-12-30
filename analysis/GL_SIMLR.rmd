@@ -403,6 +403,10 @@ nmi_balanced_div4 = nmi_mean %>%
   ggtitle("balanced_div4")
 library(patchwork)
 nmi_balanced_div2+nmi_balanced_div4
+```
+
+
+```{r}
 library(plotly)
 ggplotly(p = nmi_balanced_div2)
 ggplotly(p = nmi_balanced_div4)
