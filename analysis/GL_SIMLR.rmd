@@ -22,13 +22,15 @@ library(abSNF)
 library(SNFtool)
 library(igraph)
 library(Matrix)
-library(CancerSubtypes)
+library(quadprog)
+# library(CancerSubtypes)
 
 ## mwe data
 source("code/functions/simulation_function.R")
 source("code/R/compute.multiple.kernel.R")
 source("code/functions/simulation_verify.R")
 source("./code/functions/gl_simlr.R")
+source("./code/functions/gl_simlr2.0.R")
 
 ```
 
@@ -352,9 +354,9 @@ GL_trace = NULL
 tunning_crit = NULL
 gl_weight = NULL
 tunning_best = NULL
-files = list.files("./data/simu_1229/")
+files = list.files("./data/simu_0106/")
 for(i in 1:length(files)){
-  load(file = paste("./data/simu_1229/", files[i], sep = ""))
+  load(file = paste("./data/simu_0106/", files[i], sep = ""))
   eva_nmi = rbind(eva_nmi,res$eva_nmi)
   eva_rand = rbind(eva_rand, res$eva_rand)
   gl_weight = rbind(gl_weight, res$gl_weight)
@@ -366,11 +368,45 @@ for(i in 1:length(files)){
 ```{r}
 nmi_mean = eva_nmi %>% 
   group_by(scenario) %>% 
-  summarise_all(mean) %>% 
-  separate(scenario,into = c("ratio","eff","sigma","div"), sep = "_")
+  summarise_all(mean) 
+  # %>% separate(scenario,into = c("ratio","eff","sigma","div"), sep = "_")
+```
 
 
+```{r}
+## per scenario comparison
+library(directlabels)
+scenario_analysis = function(scenario_name){
+  methods_datatype = c("kmean_1","kmean_2","kmean_3","kmean_12","kmean_13","kmean_123","hclust_1","hclust_2","hclust_3","hclust_12","hclust_13","hclust_123","spec_1","spec_2","spec_3","spec_12","spec_13","spec_123","SNF_12","SNF_13","SNF_123","abSNF_123","glSIMLR_12","glSIMLR_13","glSIMLR_123","glSIMLR2_12","glSIMLR2_13","glSIMLR2_123","glSIML2Nogl_12","glSIML2Nogl_13","glSIML2Nogl_123")
+
+scenario_case = 
+  nmi_mean %>%
+  filter(scenario == scenario_name) %>%  ## change the scenario here
+  pivot_longer(nmi_kmean1:nmi_spec_g2_nogl,
+    names_to = "methods",
+    values_to = "nmi",
+    names_prefix = "nmi_") %>%
+  mutate(methods = methods_datatype) %>% 
+  separate(methods, into = c("methods", "datatype"),sep = "_") %>% 
+  mutate(datatype = factor(datatype, levels = c(1,2,3,12,13,123)))
+  
+
+library(plotly)
+p =
+  scenario_case %>% 
+    ggplot(aes(x = datatype, y = nmi, color = methods, group = methods)) +
+    geom_line(alpha = 0.5)+
+    geom_point(alpha = 0.7)
+ggplotly(p)
+}
+
+scenario_analysis(scenario_name = "sub1111_eff111_sig1_div4")
+```
+
+
+```{r}
 nmi_balanced_div2 = nmi_mean %>% 
+  separate(scenario,into = c("ratio","eff","sigma","div"), sep = "_") %>% 
   filter(ratio == "sub1111"&div == "div2") %>% 
   dplyr::select(eff, sigma,concatenation = nmi_spec_c, SNF = nmi_spec_s, absnf = nmi_spec_abs, gl = nmi_spec_g2, gl_nogl = nmi_spec_g2_nogl) %>% 
   pivot_longer(
@@ -387,6 +423,7 @@ nmi_balanced_div2 = nmi_mean %>%
   ggtitle("balanced_div2")
 
 nmi_balanced_div4 = nmi_mean %>% 
+  separate(scenario,into = c("ratio","eff","sigma","div"), sep = "_") %>% 
   filter(ratio == "sub1111"&div == "div4") %>% 
   dplyr::select(eff, sigma,concatenation = nmi_spec_c, SNF = nmi_spec_s, absnf = nmi_spec_abs, gl = nmi_spec_g2, gl_nogl = nmi_spec_g2_nogl) %>% 
   pivot_longer(
@@ -402,7 +439,7 @@ nmi_balanced_div4 = nmi_mean %>%
   theme(legend.position = "bottom")+
   ggtitle("balanced_div4")
 library(patchwork)
-nmi_balanced_div2+nmi_balanced_div4
+# nmi_balanced_div2+nmi_balanced_div4
 ```
 
 
@@ -485,7 +522,226 @@ weight_glno_2 = as_tibble(gl_weight) %>%
 weight_glno_2+weight_gl_2
 ```
 
+## explore why the GL-simlr perform bad on div4
 
+```{r}
+library(rlist)
+sim1 = simulation_3(data_divide = rep("1/2/3/4",3),sigma = rep(10,3))
+# sim1 = simulation_3(sigma = rep(100,3))
+mds_list = lapply(sim1[1:3], function(x){
+  dist = dist2(x,x)
+  mds = cmdscale(dist,2)
+  return(mds)
+})
+g_sim1 = as_tibble(list.rbind(mds_list)) %>% 
+  mutate(data_type = rep(c(1,2,3), each = 200),
+         true = rep(sim1$truelabel, 3)) %>% 
+  ggplot(aes(x = V1, y = V2, color = factor(true)))+
+  geom_point()+
+  facet_grid(data_type~., scale = "free")
+
+g_sim1
+```
+
+
+```{r}
+gl1 = gl_simlr(list(sim1$data1,sim1$data2,sim1$data3))
+
+igraph::compare(sim1$truelabel, gl1$cluster, method = "nmi")
+# source("./code/R/network.diffusion.R")
+# net.K = network.diffusion(gl1$K,K = 30)
+```
+
+
+
+```{r}
+
+w_snf = SNF(lapply(sim1[1:3], function(x) affinityMatrix(dist2(x))))
+cluster_w1 = spectralClustering(w_snf,4)
+
+igraph::compare(sim1$truelabel, cluster_w1, method = "nmi")
+
+## show the integrative matrix
+diag(w_snf) = 0
+heatmap(w_snf, Colv = NA, Rowv = NA, scale = "column")
+heatmap(gl1$K, Colv = NA, Rowv = NA, scale = "column")
+```
+
+This simulation gives the scenario where the clusters are having different distances.
+
+As we can see here, the SNF can use local similarity, which can diminish the influence from the original space structure which enlarging the similarity btw 13 and 24; 
+
+But for our gl-simlr, since we only add up all kernels with different weight, this weighted kernel can't show any denoising effect, the low rank optimization also shows no effect.
+
+### Try learn the similarity
+
+```{r}
+rho = 0.5
+alpha0 = 5
+alpha = 5
+beta = 10
+gamma = 1
+gl_s1 = Crazy_5term_clust(data_list = sim1[1:3], c=4, alpha0 = alpha0,alpha = alpha, rho = rho, beta = beta, gamma = gamma,normalize = 1)
+cluster_s1 = spectralClustering(gl_s1$S, K = 4)
+# net.S = network.diffusion(gl_s1$S, 30)
+heatmap(gl_s1$S, Colv = NA, Rowv = NA, scale = "column")
+
+igraph::compare(sim1$truelabel, cluster_s1, method = "nmi")
+```
+
+Still bad performance relatively;
+
+And this method performs extremely bad when div2
+
+```{r}
+sim2 = simulation_3(sigma = rep(10,3))
+
+rho = 0.5
+alpha0 = 1
+alpha = 1
+beta = 5
+gamma = 5
+gl_s2 = Crazy_5term_clust(data_list = sim2[1:3], c=4, alpha0 = alpha0,alpha = alpha, rho = rho, beta = beta, gamma = gamma,normalize = 1)
+cluster_s2 = spectralClustering(gl_s2$S, K = 4)
+# net.S = network.diffusion(gl_s2$S, 30)
+heatmap(gl_s2$S, Colv = NA, Rowv = NA, scale = "column")
+
+igraph::compare(sim1$truelabel, cluster_s2, method = "nmi")
+```
+
+compare to the simple kernel weighted combination
+
+```{r}
+gl2 = gl_simlr(sim2[1:3])
+
+igraph::compare(sim2$truelabel, gl2$cluster, method = "nmi")
+```
+
+
+## QUESTION: 
+1. Why s can't be learned properly? 
+2. How to combine these 2 scenario
+3. How CIMLR perform on div2
+4. How to capture the distance between clusters?
+
+
+### Q1 Why s can't be learned?
+
+```{r}
+## is local term make a difference?
+kernels1 = lapply(sim1[1:3], FUN = function(x) D_kernels(x_fun = x,allk_fun = 50,sigma_fun = 1))
+local_kernels1 = lapply(kernels1, FUN = function(x) dominateset(x$Kernels,30))
+
+heatmap(as.matrix(kernels1$data1$Kernels), Colv = NA, Rowv = NA, scale = "column")
+tmp = local_kernels1[[1]]
+# diag(tmp) = 0
+heatmap(tmp, Colv = NA, Rowv = NA, scale = "column")
+
+cluster1 = spectralClustering(affinity = as.matrix(kernels1$data1$Kernels), K = 4,type = 3)
+igraph::compare(cluster1, sim1$truelabel, method = "nmi")
+```
+
+As we can see here, the current local Kernels can't have local structures. which means the first 30 neighbours of the subjects are actually not within the same cluster;
+
+```{r}
+aff1 = affinityMatrix(dist2(sim1$data1)^(1/2))
+local_aff1 = dominateset(aff1, 30)
+cluster2 = spectralClustering(affinity = aff1, K = 4,type = 3)
+diag(aff1) = 0 # just to show more clearly
+# heatmap(aff1, Colv = NA, Rowv = NA, scale = "column")
+diag(local_aff1) = 0
+heatmap(local_aff1, Colv = NA, Rowv = NA, scale = "column")
+
+igraph::compare(cluster2, sim1$truelabel, method = "nmi")
+```
+
+But the affinitymatrix in SNFtool library can build kernels that holds the local structure; This would be derived from the 2 different sigma definition in the Gaussian kernel;
+
+DISCUSS: Why the affinity matrix better capture the local structure?
+
+#### [FROM HERE: NOT WORKING] affinity_kernel gl-SIMLR
+MEMO: First review from the exploration why GL-smilr not working in div4, then check the affinitymatrix not working reason
+
+since we need the local structure, try using affinity matrix as the kernels.
+
+Although which kernel should be used can't be pre-determined in real scenario, we can at least test whether the S and local kernels work
+
+```{r}
+rho = 0.5
+alpha0 = 5
+alpha = 5
+beta = 1
+gamma = 1
+gl_s3 = Crazy_5term_clust(data_list = sim2[1:3], c=4, kernel_fun = "affinity",alpha0 = alpha0,alpha = alpha, rho = rho, beta = beta, gamma = gamma,normalize = 1)
+## FROM HERE
+## why normalize == 2 can't be solved?
+
+
+cluster_s3 = spectralClustering(gl_s3$S, K = 4)
+# net.S = network.diffusion(gl_s3$S, 30)
+# diag(net.S) = 0
+tmp = gl_s3$S
+diag(tmp) = 0
+heatmap(gl_s3$S, Colv = NA, Rowv = NA, scale = "column")
+# heatmap(net.S, Colv = NA, Rowv = NA, scale = "column")
+
+igraph::compare(sim1$truelabel, cluster_s2, method = "nmi")
+```
+
+#### multiple kernel gl-SIMLR
+
+```{r}
+## to add
+```
+
+
+
+```{r, include = F}
+spectralClustering2 = function (affinity, K, type = 3) 
+{
+    d = rowSums(affinity)
+    d[d == 0] = .Machine$double.eps
+    D = diag(d)
+    L = D - affinity
+    if (type == 1) {
+        NL = L
+    }else if (type == 2) {
+        Di = diag(1/d)
+        NL = Di %*% L
+    }else if (type == 3) {
+        Di = diag(1/sqrt(d))
+        NL = Di %*% L %*% Di
+    }
+    eig = eigen(NL)
+    res = sort(abs(eig$values), index.return = TRUE)
+    U = eig$vectors[, res$ix[1:K]]
+    normalize <- function(x) x/sqrt(sum(x^2))
+    if (type == 3) {
+        U = t(apply(U, 1, normalize))
+    }
+    eigDiscrete = .discretisation(U)
+    eigDiscrete = eigDiscrete$discrete
+    labels = apply(eigDiscrete, 1, which.max)
+    return(labels)
+}
+
+## What is .discretisation?
+## Why no need to kmeans?
+```
+
+
+```{r, include=F}
+# library(SIMLR)
+# load("/Users/miaoyuqi/研究/Shuang project/Topic paper/multi-omics/multi-SIMLR/data/Test_1_mECS.RData")
+# source("../code/functions/SIMLR_multi.R")
+# D_kernels_list = lapply(sim1[1:3],FUN = function(x){D_kernels(x_fun = x)$D_Kernels})
+# res_sim = SIMLR_multi(D_Kernels = D_kernels_list,c = 4)
+# 
+# displayClusters(res_sim$S,group = sim1$truelabel)
+# igraph::compare(sim1$truelabel, res_sim$y$cluster, method = "nmi")
+# res_sim$alphaK
+
+```
 
 
 
