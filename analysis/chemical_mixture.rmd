@@ -36,7 +36,7 @@ time.taken1
 ExtractPIPs(fitkm)
 
 ## value of r and delta
-par(mfrow = c(4,1))
+
 for(i in 1:4){
   TracePlot(fitkm, par = "r", comp  = i)
 }
@@ -81,7 +81,7 @@ time.taken3
 ExtractPIPs(fitkm2)
 
 ## value of r and delta
-par(mfrow = c(4,1))
+
 for(i in 1:4){
   TracePlot(fitkm, par = "r", comp  = i)
 }
