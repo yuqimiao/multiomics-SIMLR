@@ -25,7 +25,6 @@
 
 # 3 data type simulation
 # adjust number of subtype based on given ratio
-library(stringr)
 
 simulation_3 = function(size = 200,sub_ratio =rep(0.25,4),eff_size = rep(5,3),sigma = rep(100,3),data_divide =c("12/34","13/24","14/23"),dist = rep("normal",3),n1 = 50*0.6,n2 = 950*0.8,r1 = 1,r2 = 3,uninfo_r1 = 0,uninfo_r2 = 1){
   ## calculate index_cut for given subtype ratio
@@ -78,74 +77,34 @@ simulation_2 = function(size = 150,sub_ratio =  rep(1/3,3),eff_size = rep(1,2),s
 }
 
 
-# get_data = function(size, index, data_divide, dist, eff_size,sigma ){
-#   data1 = matrix(0,size, 1000)
-#   divide = lapply(X = str_split(str_split(data_divide,pattern = "/")[[1]], pattern = ""),
-#                   FUN = as.numeric
-#   )
-#   ind1 = NULL
-#   for(i in 1:length(divide[[1]])){
-#     ind1 = c(ind1, index[[divide[[1]][i]]])
-#   }
-#   ind2 = NULL
-#   for(i in 1:length(divide[[2]])){
-#     ind2 = c(ind2, index[[divide[[2]][i]]])
-#   }
-#   if (dist == "normal"){
-#     data1[ind1,1:50] = rnorm(length(ind1)*50, eff_size[1], sqrt(sigma))
-#     data1[ind2,1:50] = rnorm(length(ind2)*50, -eff_size[1], sqrt(sigma))
-#     data1[,51:1000] = rnorm(size*950, 0, sqrt(sigma))
-#   }else if(dist == "logit"){
-#     data1[ind1,1:50] = sapply(X = rnorm(length(ind1)*50, eff_size[1], sqrt(sigma)),
-#                               FUN = function(x) exp(x)/(1+exp(x)))
-#     data1[ind2,1:50] = sapply(X = rnorm(length(ind2)*50, -eff_size[1], sqrt(sigma)),
-#                               FUN = function(x) exp(x)/(1+exp(x)))
-#     data1[,51:1000] = sapply(X = rnorm(size*950, 0, sqrt(sigma)),
-#                               FUN = function(x) exp(x)/(1+exp(x)))
-#
-#   }
-#   return(data1)
-# }
-
 get_data = function(size, index, data_divide, dist, eff_size,sigma ){
   data1 = matrix(0,size, 1000)
   divide = lapply(X = str_split(str_split(data_divide,pattern = "/")[[1]], pattern = ""),
                   FUN = as.numeric
   )
-  ind_list = list()
-  for(i in 1: length(divide)){
-    ind = NULL
-    for(j in 1:length(divide[[i]])){
-      ind = c(ind,index[[divide[[i]][[j]]]])
-    }
-    ind_list[[i]] = ind
+  ind1 = NULL
+  for(i in 1:length(divide[[1]])){
+    ind1 = c(ind1, index[[divide[[1]][i]]])
+  }
+  ind2 = NULL
+  for(i in 1:length(divide[[2]])){
+    ind2 = c(ind2, index[[divide[[2]][i]]])
   }
   if (dist == "normal"){
-    for(i in 1:length(ind_list)){
-      data1[ind_list[[i]], 1:50] = rnorm(length(ind_list[[i]])*50,
-                                        ((-1)^i)*ifelse(i<=2, eff_size[1], eff_size[1]*2),
-                                        sqrt(sigma))
-    }
+    data1[ind1,1:50] = rnorm(length(ind1)*50, eff_size[1], sqrt(sigma))
+    data1[ind2,1:50] = rnorm(length(ind2)*50, -eff_size[1], sqrt(sigma))
     data1[,51:1000] = rnorm(size*950, 0, sqrt(sigma))
   }else if(dist == "logit"){
-    for(i in 1:length(ind_list)){
-      data1[ind_list[[i]], 1:50] = sapply(X = rnorm(length(ind_list[[i]])*50,
-                                               ((-1)^i)*ifelse(i<=2, eff_size[1], 2*eff_size[1]),
-                                               sqrt(sigma)
-                                              ),
-                                         FUN = function(x) exp(x)/(1+exp(x))
-                                        )
-    }
+    data1[ind1,1:50] = sapply(X = rnorm(length(ind1)*50, eff_size[1], sqrt(sigma)),
+                              FUN = function(x) exp(x)/(1+exp(x)))
+    data1[ind2,1:50] = sapply(X = rnorm(length(ind2)*50, -eff_size[1], sqrt(sigma)),
+                              FUN = function(x) exp(x)/(1+exp(x)))
     data1[,51:1000] = sapply(X = rnorm(size*950, 0, sqrt(sigma)),
-                             FUN = function(x) exp(x)/(1+exp(x)))
+                              FUN = function(x) exp(x)/(1+exp(x)))
 
   }
   return(data1)
 }
-
-
-
-
 #n1 is # of correct weights for informative features
 #n2 is # of correct weights for non-informative features
 #r1, r2, uninfo_r1, uninfo_r2 define the magnitude of correct wights

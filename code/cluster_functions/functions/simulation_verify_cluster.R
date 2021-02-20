@@ -1,9 +1,29 @@
+
+.libPaths("/ifs/scratch/msph/biostat/sw2206/yuqi/R_libs")
 library(SNFtool)
 library(SIMLR)
 library(abSNF)
 
-source("./code/functions/Estimate_Number_of_Clusters.R")
-source("./code/functions/SIMLR_multi.R")
+source("./functions/Estimate_Number_of_Clusters.R")
+source("./functions/SIMLR_multi_cluster.R")
+
+## simulation function
+# input:
+#   scenario parameter -- including subtype ratio:(1/3,1/3,1/3), (0.1,0.3,0.6),(0.1,0.1,0.8),
+#                                   effective size: (5,5), (1,10)
+#   K -- number of clusters to tunn
+# output:
+#   simulation table for 1,2,SNF, SIMLR:
+#   gap -- the eigen gap for corresponding similarity matrix
+#   NMI -- normalized mutual information for spectual clustering results from corresponding similarity matrix
+#   rand -- rand index for spectual clustering results from corresponding similarity matrix
+
+
+### use the affinity matrix def in SNF to construct SNF
+# set.seed(123)
+# sim = simulation_1() ## balanced case
+# K = 3
+# truelabel = sim$true_label
 
 simulation_verify_3data = function(K,sim,truelabel,normalize = FALSE,cores.ratio = 0.5){
   data1_info = get_info(sim$data1,sim$weight1,truelabel, K = K, cores.ratio = cores.ratio,normalize = normalize)
@@ -56,11 +76,10 @@ simulation_verify_3data = function(K,sim,truelabel,normalize = FALSE,cores.ratio
     rand_SIMLR,
     weight1_sum = sum(SIMLR_MS$alphaK[1:55]),
     weight2_sum = sum(SIMLR_MS$alphaK[56:110])
-    )
+  )
   return(evaluation)
 }
-
-
+## simulation_verify_2 add the weight changing simlr methods
 simulation_verify_2data = function(K,sim,truelabel,w1 = NA,normalize = FALSE,cores.ratio = 0.5){
   data1_info = get_info(sim$data1,sim$weight1,truelabel, K = K, cores.ratio = cores.ratio,normalize = normalize)
   data2_info = get_info(sim$data2,sim$weight2,truelabel, K = K, cores.ratio = cores.ratio,normalize = normalize)
@@ -136,7 +155,6 @@ simulation_verify_2data = function(K,sim,truelabel,w1 = NA,normalize = FALSE,cor
   return(evaluation)
 }
 
-
 get_info = function(data1,weight1,truelabel,K = 2, cores.ratio = 0.5,normalize = T){
   if(normalize){
     data1 = standardNormalization(data1)
@@ -150,6 +168,14 @@ get_info = function(data1,weight1,truelabel,K = 2, cores.ratio = 0.5,normalize =
   res_data = tibble(gap = gap, nmi = nmi, rand = rand)
   return(list(res_data = res_data, mk = mk, af = af))
 }
+
+
+
+
+
+
+
+
 
 
 
